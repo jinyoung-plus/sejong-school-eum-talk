@@ -19,7 +19,7 @@ import {
 } from 'lucide-react';
 
 const navItems = [
-  { path: '/', label: '홈', icon: Home },
+  { path: '/', label: '홈!', icon: Home },
   { path: '/schools', label: '현황', icon: School },
   { path: '/map', label: '지도', icon: Map },
   { path: '/compare', label: '비교', icon: GitCompareArrows },
