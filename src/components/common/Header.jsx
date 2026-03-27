@@ -24,7 +24,7 @@ const navItems = [
   { path: '/map', label: '지도', icon: Map },
   { path: '/compare', label: '비교', icon: GitCompareArrows },
   { path: '/statistics', label: '통계', icon: BarChart3 },
-  { path: '/chat', label: 'AI 채팅', icon: MessageCircle },
+  { path: '/chat', label: 'AI채팅', icon: MessageCircle },
   { path: '/data', label: '데이터', icon: Database, staffOnly: true },
 ];
 
@@ -129,7 +129,7 @@ export default function Header() {
                   </div>
                   <span className="text-sm font-medium">
                     {userName}
-                    <span className="text-white/50 font-normal ml-0.5">님</span>
+                    <span className="text-white/50 font-normal ml-0.5">님!</span>
                   </span>
                 </Link>
                 <button
