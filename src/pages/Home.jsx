@@ -119,7 +119,7 @@ export default function Home() {
           {/* 배지 */}
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/10 text-white/80 text-xs font-medium mb-6 animate-fade-in">
             <Sparkles size={12} className="text-primary-300" />
-            세종특별자치시교육청 AI 학습동아리
+            세종시교육청 AI 학습동아리
           </div>
 
           <h2 className="text-3xl md:text-5xl font-extrabold text-white tracking-tight leading-tight mb-4 animate-slide-up">
