@@ -193,7 +193,7 @@ export default function Header() {
                     className="flex items-center gap-3 px-3 py-2.5 text-primary-300 hover:bg-white/10 rounded-lg transition"
                   >
                     <User size={16} />
-                    <span className="text-sm font-medium">{userName}님</span>
+                    <span className="text-sm font-medium">{userName}님!</span>
                     <Settings size={13} className="ml-auto text-white/30" />
                   </Link>
                   <button
