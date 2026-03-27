@@ -18,3 +18,12 @@ export const supabase = supabaseUrl
 export const isSupabaseConfigured = () => {
   return Boolean(supabaseUrl && supabaseAnonKey);
 };
+
+// 기존 storageKey 세션 정리 (한번만 실행)
+try {
+  const oldKey = 'sejong-school-eum-talk-auth';
+  if (localStorage.getItem(oldKey)) {
+    localStorage.removeItem(oldKey);
+    localStorage.removeItem(oldKey + '-code-verifier');
+  }
+} catch {}
