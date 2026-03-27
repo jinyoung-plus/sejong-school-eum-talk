@@ -1,8 +1,8 @@
 /**
- * Profile.jsx — 개인정보 수정 페이지 (v2 수정)
- * - 타임아웃 추가 (Supabase 응답 없을 때 대비)
- * - supabase null 체크
- * - Console 디버그 로그
+ * Profile.jsx — 개인정보 수정 페이지 (v3)
+ * - 이름 변경: profiles 테이블 직접 UPDATE (auth.updateUser 사용 안 함)
+ * - 비밀번호: 재설정 이메일 발송 방식
+ * - 회원 탈퇴: profiles 삭제 + 데이터 비활성화
  */
 
 import { useState } from 'react';
@@ -11,21 +11,11 @@ import { useAuth } from '../hooks/useAuth';
 import { supabase } from '../lib/supabase';
 import {
   User, Lock, Trash2, CheckCircle2, AlertTriangle,
-  ArrowLeft, Eye, EyeOff, Shield,
+  ArrowLeft, Shield, Mail,
 } from 'lucide-react';
 
-// 타임아웃 유틸
-function withTimeout(promise, ms = 10000) {
-  return Promise.race([
-    promise,
-    new Promise((_, reject) =>
-      setTimeout(() => reject(new Error(`요청 시간 초과 (${ms / 1000}초). 로그아웃 후 재로그인 해주세요.`)), ms)
-    ),
-  ]);
-}
-
 export default function Profile() {
-  const { user, role, signOut } = useAuth();
+  const { user, role, displayName, signOut } = useAuth();
   const navigate = useNavigate();
 
   if (!user) {
@@ -36,10 +26,8 @@ export default function Profile() {
   return (
     <div className="min-h-screen bg-slate-50">
       <div className="max-w-2xl mx-auto px-4 py-8">
-        <button
-          onClick={() => navigate(-1)}
-          className="flex items-center gap-1.5 text-sm text-slate-400 hover:text-slate-600 mb-6 transition"
-        >
+        <button onClick={() => navigate(-1)}
+          className="flex items-center gap-1.5 text-sm text-slate-400 hover:text-slate-600 mb-6 transition">
           <ArrowLeft size={16} /> 뒤로가기
         </button>
 
@@ -55,9 +43,9 @@ export default function Profile() {
           </p>
         </div>
 
-        <AccountInfoCard user={user} role={role} />
-        <DisplayNameSection user={user} />
-        <PasswordSection />
+        <AccountInfoCard user={user} role={role} displayName={displayName} />
+        <DisplayNameSection user={user} currentName={displayName} />
+        <PasswordSection userEmail={user?.email} />
         <DeleteAccountSection user={user} signOut={signOut} navigate={navigate} />
       </div>
     </div>
@@ -67,7 +55,7 @@ export default function Profile() {
 // ============================================================
 // 계정 정보 카드
 // ============================================================
-function AccountInfoCard({ user, role }) {
+function AccountInfoCard({ user, role, displayName }) {
   const roleLabel = { admin: '관리자', staff: '내부 직원', public: '일반 사용자' };
   const roleColor = {
     admin: 'bg-purple-50 text-purple-700',
@@ -79,12 +67,10 @@ function AccountInfoCard({ user, role }) {
     <div className="bg-white rounded-2xl border border-slate-200 p-5 mb-5 shadow-sm">
       <div className="flex items-center gap-4">
         <div className="w-14 h-14 rounded-full bg-gradient-to-br from-teal-400 to-teal-600 flex items-center justify-center text-white text-xl font-bold">
-          {(user?.user_metadata?.display_name || user?.email)?.[0]?.toUpperCase() || 'U'}
+          {(displayName || 'U')[0].toUpperCase()}
         </div>
         <div className="flex-1">
-          <div className="text-lg font-bold text-slate-800">
-            {user?.user_metadata?.display_name || user?.email?.split('@')[0]}
-          </div>
+          <div className="text-lg font-bold text-slate-800">{displayName || '사용자'}</div>
           <div className="text-sm text-slate-400">{user?.email}</div>
           <div className="flex items-center gap-2 mt-1.5">
             <span className={`text-[11px] font-semibold px-2.5 py-0.5 rounded-full ${roleColor[role] || roleColor.public}`}>
@@ -102,11 +88,11 @@ function AccountInfoCard({ user, role }) {
 }
 
 // ============================================================
-// 이름(실명) 수정
+// 이름(실명) 수정 — profiles 테이블 직접 사용
 // ============================================================
-function DisplayNameSection({ user }) {
-  const currentName = user?.user_metadata?.display_name || '';
-  const [name, setName] = useState(currentName);
+function DisplayNameSection({ user, currentName }) {
+  const { updateDisplayName } = useAuth();
+  const [name, setName] = useState(currentName || '');
   const [status, setStatus] = useState(null);
   const [message, setMessage] = useState('');
   const [saving, setSaving] = useState(false);
@@ -114,31 +100,17 @@ function DisplayNameSection({ user }) {
   const handleSave = async () => {
     if (!name.trim()) { setStatus('error'); setMessage('이름을 입력해주세요.'); return; }
     if (name.trim().length < 2) { setStatus('error'); setMessage('이름은 2자 이상 입력해주세요.'); return; }
-    if (!supabase) { setStatus('error'); setMessage('Supabase 연결이 되어 있지 않습니다.'); return; }
 
     setSaving(true);
     setStatus(null);
 
     try {
-      const { error: authError } = await withTimeout(
-        supabase.auth.updateUser({ data: { display_name: name.trim() } })
-      );
-      if (authError) throw authError;
-
-      // profiles 테이블도 업데이트 (실패해도 진행)
-      try {
-        await withTimeout(
-          supabase.from('profiles').update({ display_name: name.trim() }).eq('user_id', user.id),
-          5000
-        );
-      } catch (e) {
-        console.warn('[Profile] profiles 업데이트 실패 (무시):', e.message);
-      }
+      const result = await updateDisplayName(name.trim());
+      if (result.error) throw new Error(result.error);
 
       setStatus('success');
-      setMessage('이름이 변경되었습니다. 새로고침하면 헤더에 반영됩니다.');
+      setMessage('이름이 변경되었습니다. 헤더에 바로 반영됩니다.');
     } catch (err) {
-      console.error('[Profile] 이름 변경 실패:', err);
       setStatus('error');
       setMessage(err.message || '알 수 없는 오류');
     } finally {
@@ -178,41 +150,32 @@ function DisplayNameSection({ user }) {
 }
 
 // ============================================================
-// 비밀번호 변경
+// 비밀번호 변경 — 리셋 이메일 발송 방식
 // ============================================================
-function PasswordSection() {
-  const [newPassword, setNewPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [showNew, setShowNew] = useState(false);
-  const [showConfirm, setShowConfirm] = useState(false);
+function PasswordSection({ userEmail }) {
   const [status, setStatus] = useState(null);
   const [message, setMessage] = useState('');
-  const [saving, setSaving] = useState(false);
+  const [sending, setSending] = useState(false);
 
-  const handleChange = async () => {
-    if (newPassword.length < 6) { setStatus('error'); setMessage('비밀번호는 6자 이상이어야 합니다.'); return; }
-    if (newPassword !== confirmPassword) { setStatus('error'); setMessage('새 비밀번호가 일치하지 않습니다.'); return; }
+  const handleReset = async () => {
     if (!supabase) { setStatus('error'); setMessage('Supabase 연결이 되어 있지 않습니다.'); return; }
 
-    setSaving(true);
+    setSending(true);
     setStatus(null);
 
     try {
-      const { error } = await withTimeout(
-        supabase.auth.updateUser({ password: newPassword })
-      );
+      const { error } = await supabase.auth.resetPasswordForEmail(userEmail, {
+        redirectTo: `${window.location.origin}/profile`,
+      });
       if (error) throw error;
 
       setStatus('success');
-      setMessage('비밀번호가 변경되었습니다.');
-      setNewPassword('');
-      setConfirmPassword('');
+      setMessage(`비밀번호 재설정 이메일이 ${userEmail}로 발송되었습니다. 이메일을 확인해주세요.`);
     } catch (err) {
-      console.error('[Profile] 비밀번호 변경 실패:', err);
       setStatus('error');
-      setMessage(err.message || '알 수 없는 오류');
+      setMessage(err.message || '이메일 발송에 실패했습니다.');
     } finally {
-      setSaving(false);
+      setSending(false);
     }
   };
 
@@ -222,49 +185,14 @@ function PasswordSection() {
         <Lock size={16} className="text-blue-600" /> 비밀번호 변경
       </h2>
       <div className="space-y-3">
-        <div>
-          <label className="block text-[11px] font-semibold text-slate-400 uppercase tracking-wider mb-1">새 비밀번호</label>
-          <div className="relative">
-            <input type={showNew ? 'text' : 'password'} value={newPassword}
-              onChange={(e) => { setNewPassword(e.target.value); setStatus(null); }}
-              placeholder="6자 이상 입력"
-              className="w-full h-10 rounded-lg border border-slate-200 px-4 pr-10 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/20" />
-            <button type="button" onClick={() => setShowNew(!showNew)}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600">
-              {showNew ? <EyeOff size={16} /> : <Eye size={16} />}
-            </button>
-          </div>
-        </div>
-        <div>
-          <label className="block text-[11px] font-semibold text-slate-400 uppercase tracking-wider mb-1">새 비밀번호 확인</label>
-          <div className="relative">
-            <input type={showConfirm ? 'text' : 'password'} value={confirmPassword}
-              onChange={(e) => { setConfirmPassword(e.target.value); setStatus(null); }}
-              placeholder="비밀번호 재입력"
-              className="w-full h-10 rounded-lg border border-slate-200 px-4 pr-10 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/20" />
-            <button type="button" onClick={() => setShowConfirm(!showConfirm)}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600">
-              {showConfirm ? <EyeOff size={16} /> : <Eye size={16} />}
-            </button>
-          </div>
-        </div>
+        <p className="text-xs text-slate-500 leading-relaxed">
+          비밀번호 변경을 위해 등록된 이메일로 재설정 링크를 보내드립니다.
+        </p>
 
-        {newPassword && (
-          <div className="flex items-center gap-2">
-            <div className="flex gap-1 flex-1">
-              {[1,2,3,4].map((level) => (
-                <div key={level} className={`h-1 flex-1 rounded-full transition ${
-                  newPassword.length >= level * 3
-                    ? level <= 2 ? 'bg-red-400' : level === 3 ? 'bg-amber-400' : 'bg-green-500'
-                    : 'bg-slate-200'
-                }`} />
-              ))}
-            </div>
-            <span className="text-[10px] text-slate-400">
-              {newPassword.length < 6 ? '너무 짧음' : newPassword.length < 9 ? '보통' : '강함'}
-            </span>
-          </div>
-        )}
+        <div className="flex items-center gap-2 p-3 bg-slate-50 rounded-lg border border-slate-200">
+          <Mail size={14} className="text-slate-400" />
+          <span className="text-sm text-slate-600">{userEmail}</span>
+        </div>
 
         {status && (
           <div className={`flex items-center gap-2 p-3 rounded-lg text-xs ${status === 'success' ? 'bg-teal-50 text-teal-700' : 'bg-red-50 text-red-700'}`}>
@@ -273,10 +201,11 @@ function PasswordSection() {
           </div>
         )}
 
-        <button onClick={handleChange}
-          disabled={saving || !newPassword || !confirmPassword}
+        <button onClick={handleReset}
+          disabled={sending}
           className="px-5 py-2 rounded-lg bg-blue-600 text-white text-sm font-semibold hover:bg-blue-700 transition disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-1.5">
-          {saving ? '변경 중...' : '비밀번호 변경'}
+          <Mail size={14} />
+          {sending ? '발송 중...' : '비밀번호 재설정 이메일 보내기'}
         </button>
       </div>
     </div>
@@ -304,13 +233,13 @@ function DeleteAccountSection({ user, signOut, navigate }) {
     try {
       // 1. 업로드 데이터 소프트 삭제 (실패해도 진행)
       try {
-        await withTimeout(supabase.from('uploaded_datasets').update({ is_deleted: true }).eq('uploader_id', user.id), 5000);
-      } catch (e) { console.warn('[Profile] 데이터셋 삭제 실패:', e.message); }
+        await supabase.from('uploaded_datasets').update({ is_deleted: true }).eq('uploader_id', user.id);
+      } catch (e) { console.warn('데이터셋 삭제 실패:', e.message); }
 
       // 2. 프로필 삭제 (실패해도 진행)
       try {
-        await withTimeout(supabase.from('profiles').delete().eq('user_id', user.id), 5000);
-      } catch (e) { console.warn('[Profile] 프로필 삭제 실패:', e.message); }
+        await supabase.from('profiles').delete().eq('user_id', user.id);
+      } catch (e) { console.warn('프로필 삭제 실패:', e.message); }
 
       // 3. 로그아웃
       await signOut();
@@ -318,7 +247,6 @@ function DeleteAccountSection({ user, signOut, navigate }) {
       alert('회원 탈퇴가 완료되었습니다.\n계정 데이터가 삭제 처리되었습니다.');
       navigate('/');
     } catch (err) {
-      console.error('[Profile] 회원 탈퇴 실패:', err);
       setStatus('error');
       setMessage(err.message || '알 수 없는 오류');
       setDeleting(false);

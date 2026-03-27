@@ -6,6 +6,7 @@ const AuthContext = createContext(null);
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [role, setRole] = useState('public');
+  const [displayName, setDisplayName] = useState('');
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -17,7 +18,7 @@ export function AuthProvider({ children }) {
     supabase.auth.getSession().then(({ data: { session } }) => {
       if (session?.user) {
         setUser(session.user);
-        fetchRole(session.user.id, session.user.email);
+        fetchProfile(session.user.id, session.user.email);
       }
       setLoading(false);
     });
@@ -26,10 +27,11 @@ export function AuthProvider({ children }) {
       async (_event, session) => {
         if (session?.user) {
           setUser(session.user);
-          await fetchRole(session.user.id, session.user.email);
+          await fetchProfile(session.user.id, session.user.email);
         } else {
           setUser(null);
           setRole('public');
+          setDisplayName('');
         }
       }
     );
@@ -37,23 +39,41 @@ export function AuthProvider({ children }) {
     return () => subscription.unsubscribe();
   }, []);
 
-  async function fetchRole(userId, email) {
+  // profiles 테이블에서 role + display_name 가져오기
+  async function fetchProfile(userId, email) {
     try {
       const { data } = await supabase
         .from('profiles')
-        .select('role')
+        .select('role, display_name')
         .eq('user_id', userId)
         .single();
-      if (data?.role) {
-        setRole(data.role);
-        return;
-      }
-    } catch {}
-    if (email?.endsWith('@korea.kr')) {
-      setRole('staff');
-      return;
+
+      if (data?.role) setRole(data.role);
+      else if (email?.endsWith('@korea.kr')) setRole('staff');
+      else setRole('public');
+
+      if (data?.display_name) setDisplayName(data.display_name);
+    } catch {
+      // profiles 조회 실패 시 email 도메인으로 fallback
+      if (email?.endsWith('@korea.kr')) setRole('staff');
+      else setRole('public');
     }
-    setRole('public');
+  }
+
+  // 이름 변경 (profiles 테이블만 사용, auth.updateUser 사용 안 함)
+  async function updateDisplayName(newName) {
+    if (!supabase || !user) return { error: 'Not connected' };
+    try {
+      const { error } = await supabase
+        .from('profiles')
+        .update({ display_name: newName })
+        .eq('user_id', user.id);
+      if (error) throw error;
+      setDisplayName(newName);
+      return { success: true };
+    } catch (err) {
+      return { error: err.message };
+    }
   }
 
   async function signIn(email, password) {
@@ -61,6 +81,7 @@ export function AuthProvider({ children }) {
       const isStaff = email.endsWith('@korea.kr');
       setUser({ email, id: 'local-dev' });
       setRole(isStaff ? 'staff' : 'public');
+      setDisplayName(email.split('@')[0]);
       return { user: { email }, error: null };
     }
 
@@ -71,7 +92,7 @@ export function AuthProvider({ children }) {
     return { user: data?.user, error };
   }
 
-  async function signUp(email, password, displayName) {
+  async function signUp(email, password, displayNameInput) {
     if (!isSupabaseConfigured()) {
       return { user: null, error: { message: 'Supabase 미설정' } };
     }
@@ -83,15 +104,16 @@ export function AuthProvider({ children }) {
       email,
       password,
       options: {
-        data: { display_name: displayName, role: userRole },
+        data: { display_name: displayNameInput, role: userRole },
       },
     });
 
     if (data?.user && !error) {
       await supabase.from('profiles').upsert({
         user_id: data.user.id,
+        email: email,
         role: userRole,
-        display_name: displayName,
+        display_name: displayNameInput,
       });
     }
 
@@ -101,20 +123,29 @@ export function AuthProvider({ children }) {
   async function signOut() {
     setUser(null);
     setRole('public');
+    setDisplayName('');
     if (isSupabaseConfigured()) {
       try { await supabase.auth.signOut(); } catch {}
     }
   }
 
+  // displayName 우선순위: Context state > auth metadata > email 앞부분
+  const resolvedName = displayName
+    || user?.user_metadata?.display_name
+    || user?.email?.split('@')[0]
+    || '';
+
   const value = {
     user,
     role,
+    displayName: resolvedName,
     loading,
     isStaff: role === 'staff' || role === 'admin',
     isAdmin: role === 'admin',
     signIn,
     signUp,
     signOut,
+    updateDisplayName,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
