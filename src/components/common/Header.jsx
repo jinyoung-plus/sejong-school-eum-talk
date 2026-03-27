@@ -14,7 +14,8 @@ import {
   MessageCircle,
   Database,
   Home,
-  School
+  School,
+  Settings,
 } from 'lucide-react';
 
 const navItems = [
@@ -43,7 +44,6 @@ export default function Header() {
     }
   }
 
-  // Supabase metadata에서 이름을 가져오거나 없으면 이메일 앞부분 표시
   const userName = user?.user_metadata?.display_name || user?.email?.split('@')[0] || '사용자';
 
   return (
@@ -90,7 +90,6 @@ export default function Header() {
 
           {/* 검색 + 사용자 정보 */}
           <div className="flex items-center gap-2">
-            {/* 검색창 */}
             {searchOpen ? (
               <form onSubmit={handleSearch} className="relative">
                 <input
@@ -103,38 +102,36 @@ export default function Header() {
                              rounded-full px-4 py-1.5 pl-9 text-sm
                              placeholder-white/40 focus:outline-none focus:bg-white/20 focus:border-primary-400"
                 />
-                <Search
-                  size={14}
-                  className="absolute left-3 top-1/2 -translate-y-1/2 text-white/50"
-                />
-                <button
-                  type="button"
-                  onClick={() => setSearchOpen(false)}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 text-white/50 hover:text-white"
-                >
+                <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-white/50" />
+                <button type="button" onClick={() => setSearchOpen(false)}
+                  className="absolute right-2 top-1/2 -translate-y-1/2 text-white/50 hover:text-white">
                   <X size={14} />
                 </button>
               </form>
             ) : (
-              <button
-                onClick={() => setSearchOpen(true)}
-                className="p-2 text-white/60 hover:text-white transition-colors"
-              >
+              <button onClick={() => setSearchOpen(true)}
+                className="p-2 text-white/60 hover:text-white transition-colors">
                 <Search size={18} />
               </button>
             )}
 
-            {/* 로그인/사용자 이름/로그아웃 */}
+            {/* 로그인 상태 */}
             {user ? (
               <div className="hidden sm:flex items-center gap-3 ml-2">
-                <div className="flex items-center gap-1.5 text-white">
-                  <div className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center">
-                    <User size={12} className="text-primary-300" />
+                {/* 사용자명 클릭 → 프로필 페이지 */}
+                <Link
+                  to="/profile"
+                  className="flex items-center gap-1.5 text-white hover:text-primary-300 transition-colors group"
+                  title="개인정보 관리"
+                >
+                  <div className="w-7 h-7 rounded-full bg-white/10 group-hover:bg-white/20 flex items-center justify-center transition">
+                    <User size={13} className="text-primary-300" />
                   </div>
                   <span className="text-sm font-medium">
-                    {userName} <span className="text-white/60 font-normal">님</span>
+                    {userName}
+                    <span className="text-white/50 font-normal ml-0.5">님</span>
                   </span>
-                </div>
+                </Link>
                 <button
                   onClick={signOut}
                   className="flex items-center gap-1.5 px-3 py-1.5 text-xs
@@ -157,11 +154,8 @@ export default function Header() {
               </Link>
             )}
 
-            {/* 모바일 메뉴 토글 */}
-            <button
-              onClick={() => setMobileOpen(!mobileOpen)}
-              className="lg:hidden p-2 text-white/70 hover:text-white"
-            >
+            <button onClick={() => setMobileOpen(!mobileOpen)}
+              className="lg:hidden p-2 text-white/70 hover:text-white">
               {mobileOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
           </div>
@@ -193,10 +187,15 @@ export default function Header() {
             <div className="mt-2 pt-2 border-t border-white/10">
               {user ? (
                 <div className="flex flex-col gap-1">
-                  <div className="flex items-center gap-2 px-3 py-2 text-primary-300">
+                  <Link
+                    to="/profile"
+                    onClick={() => setMobileOpen(false)}
+                    className="flex items-center gap-3 px-3 py-2.5 text-primary-300 hover:bg-white/10 rounded-lg transition"
+                  >
                     <User size={16} />
-                    <span className="text-sm font-medium">{userName}님, 반갑습니다!</span>
-                  </div>
+                    <span className="text-sm font-medium">{userName}님</span>
+                    <Settings size={13} className="ml-auto text-white/30" />
+                  </Link>
                   <button
                     onClick={() => { signOut(); setMobileOpen(false); }}
                     className="flex items-center gap-3 px-3 py-2.5 text-sm text-white/60 hover:text-white w-full"
@@ -206,11 +205,8 @@ export default function Header() {
                   </button>
                 </div>
               ) : (
-                <Link
-                  to="/login"
-                  onClick={() => setMobileOpen(false)}
-                  className="flex items-center gap-3 px-3 py-2.5 text-sm text-primary-300"
-                >
+                <Link to="/login" onClick={() => setMobileOpen(false)}
+                  className="flex items-center gap-3 px-3 py-2.5 text-sm text-primary-300">
                   <LogIn size={16} />
                   <span>로그인</span>
                 </Link>

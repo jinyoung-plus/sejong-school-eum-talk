@@ -1,6 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './hooks/useAuth';
-import Header from './components/common/Header';
+import Header from './components/common/old_Header';
 import Footer from './components/common/Footer';
 import Home from './pages/Home';
 import MapExplore from './pages/MapExplore';
@@ -10,6 +10,7 @@ import SchoolDetail from './pages/SchoolDetail';
 import DataManage from './pages/DataManage';
 import Chat from './pages/Chat';
 import Login from './pages/Login';
+import Profile from './pages/Profile';
 
 import SchoolStatus from './pages/SchoolStatus';
 
@@ -28,9 +29,10 @@ export default function App() {
             <Route path="/data" element={<DataManage />} />
             <Route path="/chat" element={<Chat />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/profile" element={<Profile />} />
 
             <Route path="/schools" element={<SchoolStatus />} />
-            
+
           </Routes>
         </main>
         <Footer />
