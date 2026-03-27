@@ -7,7 +7,6 @@ import {
   X,
   LogIn,
   LogOut,
-  User,
   Map,
   BarChart3,
   GitCompareArrows,
@@ -42,9 +41,6 @@ export default function Header() {
       setSearchOpen(false);
     }
   }
-
-  // Supabase metadata에서 이름을 가져오거나 없으면 이메일 앞부분 표시
-  const userName = user?.user_metadata?.display_name || user?.email?.split('@')[0] || '사용자';
 
   return (
     <header className="sticky top-0 z-50 bg-gradient-to-r from-navy-700 via-navy-600 to-navy-500 shadow-lg">
@@ -88,9 +84,9 @@ export default function Header() {
             })}
           </nav>
 
-          {/* 검색 + 사용자 정보 */}
+          {/* 검색 + 로그인 */}
           <div className="flex items-center gap-2">
-            {/* 검색창 */}
+            {/* 검색 */}
             {searchOpen ? (
               <form onSubmit={handleSearch} className="relative">
                 <input
@@ -124,27 +120,17 @@ export default function Header() {
               </button>
             )}
 
-            {/* 로그인/사용자 이름/로그아웃 */}
+            {/* 로그인/로그아웃 */}
             {user ? (
-              <div className="hidden sm:flex items-center gap-3 ml-2">
-                <div className="flex items-center gap-1.5 text-white">
-                  <div className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center">
-                    <User size={12} className="text-primary-300" />
-                  </div>
-                  <span className="text-sm font-medium">
-                    {userName} <span className="text-white/60 font-normal">님</span>
-                  </span>
-                </div>
-                <button
-                  onClick={signOut}
-                  className="flex items-center gap-1.5 px-3 py-1.5 text-xs
-                             text-white/70 hover:text-white border border-white/20
-                             rounded-full hover:bg-white/10 transition-all"
-                >
-                  <LogOut size={13} />
-                  <span>로그아웃</span>
-                </button>
-              </div>
+              <button
+                onClick={signOut}
+                className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 text-xs
+                           text-white/70 hover:text-white border border-white/20
+                           rounded-full hover:bg-white/10 transition-all"
+              >
+                <LogOut size={13} />
+                <span>로그아웃</span>
+              </button>
             ) : (
               <Link
                 to="/login"
@@ -192,19 +178,13 @@ export default function Header() {
             })}
             <div className="mt-2 pt-2 border-t border-white/10">
               {user ? (
-                <div className="flex flex-col gap-1">
-                  <div className="flex items-center gap-2 px-3 py-2 text-primary-300">
-                    <User size={16} />
-                    <span className="text-sm font-medium">{userName}님, 반갑습니다!</span>
-                  </div>
-                  <button
-                    onClick={() => { signOut(); setMobileOpen(false); }}
-                    className="flex items-center gap-3 px-3 py-2.5 text-sm text-white/60 hover:text-white w-full"
-                  >
-                    <LogOut size={16} />
-                    <span>로그아웃</span>
-                  </button>
-                </div>
+                <button
+                  onClick={() => { signOut(); setMobileOpen(false); }}
+                  className="flex items-center gap-3 px-3 py-2.5 text-sm text-white/60 hover:text-white w-full"
+                >
+                  <LogOut size={16} />
+                  <span>로그아웃 ({user.email})</span>
+                </button>
               ) : (
                 <Link
                   to="/login"

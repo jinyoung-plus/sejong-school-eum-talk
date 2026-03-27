@@ -203,13 +203,6 @@ export default function Login() {
           </p>
         </form>
 
-        {/* 개발 모드 안내 */}
-        <div className="mt-4 p-3 bg-amber-50 border border-amber-200 rounded-lg">
-          <p className="text-[11px] text-amber-700">
-            <strong>개발 모드:</strong> Supabase 미설정 시 아무 이메일로 로그인 가능합니다.
-            @korea.kr로 끝나는 이메일은 직원 권한이 부여됩니다.
-          </p>
-        </div>
       </div>
     </div>
   );
