@@ -3,10 +3,8 @@
   "buildCommand": "vite build",
   "outputDirectory": "dist",
   "rewrites": [
-    {
-      "source": "/api/(.*)",
-      "destination": "/api/$1"
-    },
+    { "source": "/api/(.*)",   "destination": "/api/$1" },
+    { "source": "/(.*)", "destination": "/index.html" },
     {
       "source": "/((?!@vite|src|@react-refresh|node_modules).)*",
       "destination": "/index.html"
