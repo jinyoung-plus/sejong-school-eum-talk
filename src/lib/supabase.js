@@ -10,7 +10,7 @@ export const supabase = supabaseUrl
         autoRefreshToken: true,
         detectSessionInUrl: true,
         flowType: 'implicit',
-        storageKey: 'sejong-school-eum-talk-auth',
+        storageKey: 'sjeumtalk-auth',
       },
     })
   : null;
