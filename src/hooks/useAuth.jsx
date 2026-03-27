@@ -131,7 +131,6 @@ export function AuthProvider({ children }) {
 
   // displayName 우선순위: Context state > auth metadata > email 앞부분
   const resolvedName = displayName
-    || user?.user_metadata?.display_name
     || user?.email?.split('@')[0]
     || '';
 
