@@ -128,6 +128,13 @@ export function AuthProvider({ children }) {
     setUser(null);
     setRole('public');
     setDisplayName('');
+
+    // localStorage에서 세션 직접 삭제 (signOut 실패 대비)
+    try {
+      localStorage.removeItem('sjeumtalk-auth');
+      localStorage.removeItem('sjeumtalk-auth-code-verifier');
+    } catch {}
+
     if (isSupabaseConfigured()) {
       try { await supabase.auth.signOut(); } catch {}
     }
