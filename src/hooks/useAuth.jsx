@@ -42,7 +42,7 @@ export function AuthProvider({ children }) {
   // profiles 테이블에서 role + display_name 가져오기
   async function fetchProfile(userId, email) {
     try {
-      const { data } = await supabase
+      const { data, error } = await supabase
         .from('profiles')
         .select('role, display_name')
         .eq('user_id', userId)
@@ -54,19 +54,29 @@ export function AuthProvider({ children }) {
         return;
       }
 
-      // profile이 없음 = 탈퇴한 계정
-      alert('탈퇴 처리된 계정입니다. 다시 가입해주세요.');
-      await signOut();
+      // profile이 없음 = 탈퇴한 계정 → 즉시 세션 정리
+      setUser(null);
+      setRole('public');
+      setDisplayName('');
+      try {
+        localStorage.removeItem('sjeumtalk-auth');
+        localStorage.removeItem('sjeumtalk-auth-code-verifier');
+      } catch {}
+      try { await supabase.auth.signOut(); } catch {}
+      
+      // 약간의 지연 후 알림 (state 반영 후)
+      setTimeout(() => {
+        alert('탈퇴 처리된 계정입니다. 다시 가입해주세요.');
+      }, 100);
       return;
 
     } catch (err) {
-      // 조회 에러 (RLS 등) — fallback
       if (email?.endsWith('@korea.kr')) setRole('staff');
       else setRole('public');
       setDisplayName('');
     }
   }
-
+  
   // 이름 변경 (profiles 테이블만 사용, auth.updateUser 사용 안 함)
   async function updateDisplayName(newName) {
     if (!supabase || !user) return { error: 'Not connected' };
