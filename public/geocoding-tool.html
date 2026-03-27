@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>세종 스쿨이음톡 — 지오코딩 도구</title>
+<script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=199229029b3d9f3f260e86c79fd73dda&libraries=services&autoload=false"></script>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Pretendard', -apple-system, sans-serif; background: #f0f4f8; color: #1a2636; padding: 20px; }
+  h1 { font-size: 20px; margin-bottom: 4px; }
+  .subtitle { font-size: 13px; color: #8ca0b3; margin-bottom: 20px; }
+  .card { background: #fff; border-radius: 12px; padding: 20px; box-shadow: 0 2px 16px rgba(0,0,0,0.08); margin-bottom: 16px; }
+  .warn { background: #fef3cd; border: 1px solid #ffc107; border-radius: 8px; padding: 12px; margin-bottom: 16px; font-size: 13px; }
+  .warn b { color: #856404; }
+  button { padding: 10px 24px; background: #0a8a7a; color: #fff; border: none; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; }
+  button:disabled { background: #ccc; cursor: not-allowed; }
+  button:hover:not(:disabled) { background: #087a6c; }
+  .progress { margin: 16px 0; }
+  .progress-bar { height: 8px; background: #e5e7eb; border-radius: 4px; overflow: hidden; }
+  .progress-fill { height: 100%; background: #0a8a7a; transition: width 0.3s; border-radius: 4px; }
+  .progress-text { font-size: 12px; color: #8ca0b3; margin-top: 4px; }
+  .result-area { margin-top: 16px; }
+  textarea { width: 100%; height: 300px; font-family: 'Consolas', monospace; font-size: 11px; border: 1px solid #ddd; border-radius: 8px; padding: 12px; resize: vertical; }
+  .stats { display: flex; gap: 16px; margin: 12px 0; }
+  .stat { text-align: center; flex: 1; padding: 12px; background: #f7fafc; border-radius: 8px; }
+  .stat-num { font-size: 24px; font-weight: 800; color: #0a8a7a; }
+  .stat-label { font-size: 11px; color: #8ca0b3; }
+  .copy-btn { background: #4285f4; margin-left: 8px; }
+  .download-btn { background: #34a853; margin-left: 8px; }
+  .log { max-height: 200px; overflow-y: auto; font-size: 11px; color: #666; background: #f9f9f9; border-radius: 8px; padding: 10px; margin-top: 10px; }
+  .log div { padding: 2px 0; border-bottom: 1px solid #f0f0f0; }
+  .log .ok { color: #34a853; }
+  .log .fail { color: #ef4444; }
+  .step { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; font-size: 14px; font-weight: 600; }
+  .step-num { width: 28px; height: 28px; background: #0a8a7a; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; }
+</style>
+</head>
+<body>
+<h1>🗺️ 세종 스쿨이음톡 — 카카오맵 지오코딩 도구</h1>
+<p class="subtitle">173개 학교 주소를 카카오맵 API로 정확한 좌표(위도/경도)로 변환합니다</p>
+
+<div class="warn">
+  <b>⚠️ 사용 전 필수:</b> 이 파일을 텍스트 에디터로 열어서 첫 번째 &lt;script&gt; 태그의 <b>REPLACE_WITH_YOUR_KEY</b>를 카카오맵 JavaScript 키로 교체하세요.
+</div>
+
+<div class="card">
+  <div class="step"><span class="step-num">1</span> 지오코딩 실행</div>
+  <p style="font-size:13px;color:#666;margin-bottom:12px;">버튼을 클릭하면 173개 학교 주소를 카카오 Geocoder API로 변환합니다. (약 30초 소요)</p>
+  <button id="startBtn" onclick="startGeocode()">🚀 지오코딩 시작</button>
+
+  <div class="progress" style="display:none;" id="progressWrap">
+    <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+    <p class="progress-text" id="progressText">준비 중...</p>
+  </div>
+
+  <div class="stats" id="statsWrap" style="display:none;">
+    <div class="stat"><div class="stat-num" id="statTotal">0</div><div class="stat-label">전체</div></div>
+    <div class="stat"><div class="stat-num" id="statOk">0</div><div class="stat-label">성공</div></div>
+    <div class="stat"><div class="stat-num" id="statFail">0</div><div class="stat-label">실패</div></div>
+  </div>
+
+  <div class="log" id="logArea" style="display:none;"></div>
+</div>
+
+<div class="card" id="resultCard" style="display:none;">
+  <div class="step"><span class="step-num">2</span> SQL 복사 → Supabase SQL Editor에서 실행</div>
+  <p style="font-size:13px;color:#666;margin-bottom:12px;">아래 SQL을 전체 복사하여 Supabase SQL Editor에 붙여넣고 Run 하세요.</p>
+  <div>
+    <button class="copy-btn" onclick="copySQL()">📋 SQL 복사</button>
+    <button class="download-btn" onclick="downloadSQL()">💾 SQL 파일 다운로드</button>
+  </div>
+  <div class="result-area">
+    <textarea id="sqlOutput" readonly></textarea>
+  </div>
+</div>
+
+<div class="card" id="jsonCard" style="display:none;">
+  <div class="step"><span class="step-num">3</span> schools.json 업데이트 (선택)</div>
+  <p style="font-size:13px;color:#666;margin-bottom:12px;">로컬 JSON도 업데이트하려면 아래 파일을 다운로드하여 src/data/schools.json에 덮어쓰세요.</p>
+  <button class="download-btn" onclick="downloadJSON()">💾 schools.json 다운로드</button>
+</div>
+
+<script>
+const SCHOOLS = [{"id": 1, "name": "조치원대동초병설유", "address": "세종특별자치시 조치원읍 대동학교길 11"}, {"id": 2, "name": "조치원명동초병설유", "address": "세종특별자치시 조치원읍 조치원10길 35"}, {"id": 3, "name": "조치원교동초병설유", "address": "세종특별자치시 조치원읍 새내 18길 21"}, {"id": 4, "name": "조치원신봉초병설유", "address": "세종특별자치시 조치원읍 서북부로 10"}, {"id": 5, "name": "연동초병설유", "address": "세종특별자치시 연동면 청연로 606-36"}, {"id": 6, "name": "세종도원초병설유", "address": "세종특별자치시 연서면 도원로 63"}, {"id": 7, "name": "연서초병설유", "address": "세종특별자치시 연서면 연서로 148"}, {"id": 8, "name": "쌍류초병설유", "address": "세종특별자치시 연서면 벌말길 73"}, {"id": 9, "name": "연봉초병설유", "address": "세종특별자치시 연서면 당산로 357-1"}, {"id": 10, "name": "연남초병설유", "address": "세종특별자치시 연기면 연기길 2"}, {"id": 11, "name": "금남초병설유", "address": "세종특별자치시 금남면 금남구즉로 62"}, {"id": 12, "name": "감성초병설유", "address": "세종특별자치시 금남면 감성길 6"}, {"id": 13, "name": "전의초병설유", "address": "세종특별자치시 전의면 운주산로 1204-9"}, {"id": 14, "name": "소정초병설유", "address": "세종특별자치시 소정면 학교말길 10"}, {"id": 15, "name": "전동초병설유", "address": "세종특별자치시 전동면 하노장3길 9"}, {"id": 16, "name": "부강초병설유", "address": "세종특별자치시 부강면 부강로 15"}, {"id": 17, "name": "장기초병설유", "address": "세종특별자치시 장군면 장척로 398-9"}, {"id": 18, "name": "의랑초병설유", "address": "세종특별자치시 장군면 태산길 50-1"}, {"id": 19, "name": "솔빛초병설유", "address": "세종특별자치시 반곡2길 21"}, {"id": 20, "name": "나루초병설유", "address": "세종특별자치시 집현서로 90 (집현동)"}, {"id": 21, "name": "참샘유", "address": "세종특별자치시 노을1로 27"}, {"id": 22, "name": "한솔유", "address": "세종특별자치시 누리로 32"}, {"id": 23, "name": "도담유", "address": "세종특별자치시 보람로 33"}, {"id": 24, "name": "연세유", "address": "세종특별자치시 다솜로 291"}, {"id": 25, "name": "아름유", "address": "세종특별자치시 달빛2로 29"}, {"id": 26, "name": "미르유", "address": "세종특별자치시 나리로 26-10"}, {"id": 27, "name": "새롬유", "address": "세종특별자치시 새롬서로 56"}, {"id": 28, "name": "연양유", "address": "세종특별자치시 도움3로 47-9"}, {"id": 29, "name": "나래유", "address": "세종특별자치시 달빛1로 107"}, {"id": 30, "name": "양지유", "address": "세종특별자치시 보듬8로 13"}, {"id": 31, "name": "두루유", "address": "세종특별자치시 만남로 223"}, {"id": 32, "name": "종촌유", "address": "세종특별자치시 도움1로 164"}, {"id": 33, "name": "으뜸유", "address": "세종특별자치시 마음로 130"}, {"id": 34, "name": "고운유", "address": "세종특별자치시 만남로 47"}, {"id": 35, "name": "다빛유", "address": "세종특별자치시 달빛1로 5"}, {"id": 36, "name": "온빛유", "address": "세종특별자치시 만남로 170"}, {"id": 37, "name": "늘봄유", "address": "세종특별자치시 다솜1로 175"}, {"id": 38, "name": "가락유", "address": "세종특별자치시 마음안1로 22"}, {"id": 39, "name": "보람유", "address": "세종특별자치시 남세종로 416"}, {"id": 40, "name": "소담유", "address": "세종특별자치시 소담1로 25"}, {"id": 41, "name": "새롬이유", "address": "세종특별자치시 새롬동"}, {"id": 42, "name": "새뜸유", "address": "세종특별자치시 새롬중앙로 38-11"}, {"id": 43, "name": "가득유", "address": "세종특별자치시 세종로 933"}, {"id": 44, "name": "여울유", "address": "세종특별자치시 보람1길 15"}, {"id": 45, "name": "글벗유", "address": "세종특별자치시 소담3로 26"}, {"id": 46, "name": "다정유", "address": "세종특별자치시 다정남로 33"}, {"id": 47, "name": "새움유", "address": "세종특별자치시 다정남로 91"}, {"id": 48, "name": "한결유", "address": "세종특별자치시 다정북로 137"}, {"id": 49, "name": "대평유", "address": "세종특별자치시 대평1길 17"}, {"id": 50, "name": "솔빛유", "address": "세종특별자치시 반곡2길 21"}, {"id": 51, "name": "반곡유", "address": "세종특별자치시 시청대로 464"}, {"id": 52, "name": "해밀유", "address": "세종특별자치시 해밀1로 75"}, {"id": 53, "name": "나성유", "address": "세종특별자치시 중앙공원서로 11"}, {"id": 54, "name": "다솜유", "address": "세종특별자치시 해밀동"}, {"id": 55, "name": "집현유", "address": "세종특별자치시 집현서로 25"}, {"id": 56, "name": "나루유", "address": "세종특별자치시 집현서로 90 (집현동)"}, {"id": 57, "name": "늘품유", "address": "세종특별자치시 소담동"}, {"id": 58, "name": "해나래유", "address": "세종특별자치시 달빛1로 107"}, {"id": 59, "name": "해오름유", "address": "세종특별자치시 소담동"}, {"id": 60, "name": "아우름유", "address": "세종특별자치시 소담동"}, {"id": 61, "name": "초록유", "address": "세종특별자치시 소담동"}, {"id": 62, "name": "해솔유", "address": "세종특별자치시 산울동"}, {"id": 63, "name": "바른유", "address": "세종특별자치시 산울동 281"}, {"id": 64, "name": "산울유", "address": "세종특별자치시 산울8로 1"}, {"id": 65, "name": "조치원대동초", "address": "세종특별자치시 조치원읍 대동학교길 11"}, {"id": 66, "name": "조치원명동초", "address": "세종특별자치시 조치원읍 조치원10길 35"}, {"id": 67, "name": "조치원교동초", "address": "세종특별자치시 조치원읍 새내18길 21"}, {"id": 68, "name": "조치원신봉초", "address": "세종특별자치시 조치원읍 서북부로 10"}, {"id": 69, "name": "연동초", "address": "세종특별자치시 연동면 청연로 606-36"}, {"id": 70, "name": "세종도원초", "address": "세종특별자치시 연서면 도원로 63"}, {"id": 71, "name": "연서초", "address": "세종특별자치시 연서면 연서로 148"}, {"id": 72, "name": "쌍류초", "address": "세종특별자치시 연서면 벌말길 73"}, {"id": 73, "name": "연봉초", "address": "세종특별자치시 연서면 당산로 357-1"}, {"id": 74, "name": "연남초", "address": "세종특별자치시 연기면 연기길 2"}, {"id": 75, "name": "수왕초", "address": "세종특별자치시 연기면 눌왕길 8-45"}, {"id": 76, "name": "금남초", "address": "세종특별자치시 금남면 금남구즉로 62"}, {"id": 77, "name": "감성초", "address": "세종특별자치시 금남면 감성길 6"}, {"id": 78, "name": "전의초", "address": "세종특별자치시 전의면 운주산로 1204-9"}, {"id": 79, "name": "소정초", "address": "세종특별자치시 소정면 학교말길 10"}, {"id": 80, "name": "전동초", "address": "세종특별자치시 전동면 하노장3길 9"}, {"id": 81, "name": "장기초", "address": "세종특별자치시 장군면 장척로 398-9"}, {"id": 82, "name": "의랑초", "address": "세종특별자치시 장군면 태산길 50-1"}, {"id": 83, "name": "부강초", "address": "세종특별자치시 부강면 부강로 15"}, {"id": 84, "name": "참샘초", "address": "세종특별자치시 노을1로 29"}, {"id": 85, "name": "한솔초", "address": "세종특별자치시 누리로 32"}, {"id": 86, "name": "도담초", "address": "세종특별자치시 보람로 33"}, {"id": 87, "name": "연세초", "address": "세종특별자치시 다솜로 291"}, {"id": 88, "name": "아름초", "address": "세종특별자치시 달빛로 174"}, {"id": 89, "name": "연양초", "address": "세종특별자치시 도움3로 37"}, {"id": 90, "name": "미르초", "address": "세종특별자치시 나리로 26-16"}, {"id": 91, "name": "나래초", "address": "세종특별자치시 달빛1로 108"}, {"id": 92, "name": "양지초", "address": "세종특별자치시 보듬8로 11"}, {"id": 93, "name": "두루초", "address": "세종특별자치시 만남로 227"}, {"id": 94, "name": "종촌초", "address": "세종특별자치시 도움1로 160"}, {"id": 95, "name": "으뜸초", "address": "세종특별자치시 마음로 132"}, {"id": 96, "name": "고운초", "address": "세종특별자치시 만남로 45"}, {"id": 97, "name": "다빛초", "address": "세종특별자치시 달빛1로 7"}, {"id": 98, "name": "온빛초", "address": "세종특별자치시 만남로 174"}, {"id": 99, "name": "늘봄초", "address": "세종특별자치시 다솜1로 183"}, {"id": 100, "name": "가락초", "address": "세종특별자치시 마음로 208"}, {"id": 101, "name": "보람초", "address": "세종특별자치시 보람동로 39"}, {"id": 102, "name": "소담초", "address": "세종특별자치시 소담1로 35"}, {"id": 103, "name": "새롬초", "address": "세종특별자치시 새롬중앙1로 27"}, {"id": 104, "name": "새뜸초", "address": "세종특별자치시 새롬남로 75"}, {"id": 105, "name": "가득초", "address": "세종특별자치시 세종로 941"}, {"id": 106, "name": "여울초", "address": "세종특별자치시 보람1길 9"}, {"id": 107, "name": "글벗초", "address": "세종특별자치시 소담로 121"}, {"id": 108, "name": "다정초", "address": "세종특별자치시 다정남로 35"}, {"id": 109, "name": "새움초", "address": "세종특별자치시 다정남로 93"}, {"id": 110, "name": "한결초", "address": "세종특별자치시 다정북로 139"}, {"id": 111, "name": "대평초", "address": "세종특별자치시 대평1길 19"}, {"id": 112, "name": "솔빛초", "address": "세종특별자치시 반곡2길 21"}, {"id": 113, "name": "반곡초", "address": "세종특별자치시 시청대로 468"}, {"id": 114, "name": "해밀초", "address": "세종특별자치시 해밀1로 73"}, {"id": 115, "name": "나성초", "address": "세종특별자치시 갈매로 294"}, {"id": 116, "name": "집현초", "address": "세종특별자치시 집현서로 23"}, {"id": 117, "name": "나루초", "address": "세종특별자치시 집현서로 90 (집현동)"}, {"id": 118, "name": "바른초", "address": "세종특별자치시 산울3로 33 (산울동, 바른초등학교)"}, {"id": 119, "name": "산울초", "address": "세종특별자치시 산울7로 33"}, {"id": 120, "name": "조치원중", "address": "세종특별자치시 조치원읍 대첩로 90"}, {"id": 121, "name": "세종중", "address": "세종특별자치시 조치원읍 새내로 160"}, {"id": 122, "name": "연동중", "address": "세종특별자치시 연동면 내판로 10-13"}, {"id": 123, "name": "연서중", "address": "세종특별자치시 연서면 연서로 115"}, {"id": 124, "name": "전의중", "address": "세종특별자치시 전의면 운주산로 1260-6"}, {"id": 125, "name": "장기중", "address": "세종특별자치시 장군면 장척로 359"}, {"id": 126, "name": "부강중", "address": "세종특별자치시 부강면 부강로 25-7"}, {"id": 127, "name": "금호중", "address": "세종특별자치시 대평로 27"}, {"id": 128, "name": "한솔중", "address": "세종특별자치시 나리로 43"}, {"id": 129, "name": "도담중", "address": "세종특별자치시 보람로 80"}, {"id": 130, "name": "새롬중", "address": "세종특별자치시 어울로 41"}, {"id": 131, "name": "아름중", "address": "세종특별자치시 달빛1로 167"}, {"id": 132, "name": "어진중", "address": "세종특별자치시 다솜로 10"}, {"id": 133, "name": "고운중", "address": "세종특별자치시 만남로 65"}, {"id": 134, "name": "두루중", "address": "세종특별자치시 만남로 211"}, {"id": 135, "name": "종촌중", "address": "세종특별자치시 도움1로 126"}, {"id": 136, "name": "양지중", "address": "세종특별자치시 갈매로 512"}, {"id": 137, "name": "소담중", "address": "세종특별자치시 남세종로 340"}, {"id": 138, "name": "새움중", "address": "세종특별자치시 다정서로 12"}, {"id": 139, "name": "새뜸중", "address": "세종특별자치시 새롬중앙로 62-12"}, {"id": 140, "name": "보람중", "address": "세종특별자치시 남세종로 423"}, {"id": 141, "name": "글벗중", "address": "세종특별자치시 소담4로 33"}, {"id": 142, "name": "다정중", "address": "세종특별자치시 다정서로 52"}, {"id": 143, "name": "반곡중", "address": "세종특별자치시 시청대로 480"}, {"id": 144, "name": "해밀중", "address": "세종특별자치시 해밀2로 6"}, {"id": 145, "name": "나성중", "address": "세종특별자치시 갈매로 298"}, {"id": 146, "name": "집현중", "address": "세종특별자치시 집현서로 42"}, {"id": 147, "name": "산울중", "address": "세종특별자치시 산울7로 33"}, {"id": 148, "name": "세종고", "address": "세종특별자치시 조치원읍 조치원중고길 10"}, {"id": 149, "name": "세종여고", "address": "세종특별자치시 조치원읍 봉산로 16"}, {"id": 150, "name": "세종미래고", "address": "세종특별자치시 부강면 문곡달미길 6"}, {"id": 151, "name": "한솔고", "address": "세종특별자치시 누리로 34"}, {"id": 152, "name": "세종국제고", "address": "세종특별자치시 달빛1로 251"}, {"id": 153, "name": "도담고", "address": "세종특별자치시 보듬4로 41"}, {"id": 154, "name": "아름고", "address": "세종특별자치시 달빛1로 151"}, {"id": 155, "name": "고운고", "address": "세종특별자치시 마음안로 93"}, {"id": 156, "name": "두루고", "address": "세종특별자치시 마음안1로 53"}, {"id": 157, "name": "세종과학예술영재학교", "address": "세종특별자치시 달빛1로 265"}, {"id": 158, "name": "종촌고", "address": "세종특별자치시 달빛1로 60"}, {"id": 159, "name": "양지고", "address": "세종특별자치시 갈매로 518"}, {"id": 160, "name": "보람고", "address": "세종특별자치시 한누리대로 2176"}, {"id": 161, "name": "새롬고", "address": "세종특별자치시 새롬서로 68"}, {"id": 162, "name": "소담고", "address": "세종특별자치시 남세종로 326"}, {"id": 163, "name": "세종예술고", "address": "세종특별자치시 연기면 중앙공원서로 60"}, {"id": 164, "name": "다정고", "address": "세종특별자치시 다정남로 15"}, {"id": 165, "name": "반곡고", "address": "세종특별자치시 시청대로 566"}, {"id": 166, "name": "세종장영실고", "address": "세종특별자치시 금남구즉로 196"}, {"id": 167, "name": "해밀고", "address": "세종특별자치시 해밀2로 36 (해밀동, 해밀고등학교)"}, {"id": 168, "name": "세종캠퍼스고", "address": "세종특별자치시 산울3로 140"}, {"id": 169, "name": "세종대성고", "address": "세종특별자치시 다솜로 22"}, {"id": 170, "name": "세종누리학교", "address": "세종특별자치시 만남로 326-14(고운동)"}, {"id": 171, "name": "세종이음학교", "address": "세종특별자치시 집현부강로 15 (집현동)"}, {"id": 172, "name": "세종늘벗학교", "address": "세종특별자치시 조치원읍 내창천로 52 (서창리)"}, {"id": 173, "name": "온세종학교", "address": "세종특별자치시 산울3로 140 (산울동, 세종캠퍼스고등학교)"}];
+
+let results = [];
+let geocoder = null;
+
+function startGeocode() {
+  if (!window.kakao || !window.kakao.maps) {
+    alert('카카오맵 SDK가 로드되지 않았습니다.\n이 HTML 파일의 appkey를 실제 카카오맵 키로 교체했는지 확인하세요.');
+    return;
+  }
+
+  document.getElementById('startBtn').disabled = true;
+  document.getElementById('progressWrap').style.display = 'block';
+  document.getElementById('statsWrap').style.display = 'flex';
+  document.getElementById('logArea').style.display = 'block';
+
+  window.kakao.maps.load(() => {
+    geocoder = new window.kakao.maps.services.Geocoder();
+    processSchools();
+  });
+}
+
+async function processSchools() {
+  results = [];
+  let okCount = 0;
+  let failCount = 0;
+  const logArea = document.getElementById('logArea');
+
+  for (let i = 0; i < SCHOOLS.length; i++) {
+    const school = SCHOOLS[i];
+    const pct = Math.round(((i + 1) / SCHOOLS.length) * 100);
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('progressText').textContent = `${i + 1} / ${SCHOOLS.length} (${pct}%) — ${school.name}`;
+
+    if (!school.address) {
+      results.push({ ...school, latitude: null, longitude: null, status: 'no_address' });
+      failCount++;
+      logArea.innerHTML += `<div class="fail">❌ ${school.name} — 주소 없음</div>`;
+    } else {
+      const coords = await geocodeAddress(school.address);
+      if (coords) {
+        results.push({ ...school, latitude: coords.lat, longitude: coords.lng, status: 'ok' });
+        okCount++;
+        logArea.innerHTML += `<div class="ok">✅ ${school.name} → ${coords.lat.toFixed(6)}, ${coords.lng.toFixed(6)}</div>`;
+      } else {
+        results.push({ ...school, latitude: null, longitude: null, status: 'fail' });
+        failCount++;
+        logArea.innerHTML += `<div class="fail">❌ ${school.name} — 지오코딩 실패 (${school.address})</div>`;
+      }
+    }
+
+    document.getElementById('statTotal').textContent = i + 1;
+    document.getElementById('statOk').textContent = okCount;
+    document.getElementById('statFail').textContent = failCount;
+    logArea.scrollTop = logArea.scrollHeight;
+
+    // API 부하 방지: 건당 100ms 딜레이
+    await new Promise(r => setTimeout(r, 100));
+  }
+
+  document.getElementById('progressText').textContent = `완료! ${okCount}교 성공, ${failCount}교 실패`;
+  generateSQL();
+}
+
+function geocodeAddress(address) {
+  return new Promise((resolve) => {
+    geocoder.addressSearch(address, (result, status) => {
+      if (status === kakao.maps.services.Status.OK && result.length > 0) {
+        resolve({ lat: parseFloat(result[0].y), lng: parseFloat(result[0].x) });
+      } else {
+        resolve(null);
+      }
+    });
+  });
+}
+
+function generateSQL() {
+  const okResults = results.filter(r => r.status === 'ok');
+
+  let sql = '-- ==============================================\n';
+  sql += '-- 세종 스쿨이음톡 — 카카오맵 지오코딩 좌표 업데이트\n';
+  sql += '-- 생성일: ' + new Date().toLocaleString('ko-KR') + '\n';
+  sql += '-- 성공: ' + okResults.length + '교 / 전체: ' + results.length + '교\n';
+  sql += '-- Supabase SQL Editor에서 실행하세요\n';
+  sql += '-- ==============================================\n\n';
+
+  okResults.forEach(r => {
+    sql += `UPDATE schools SET latitude = ${r.latitude}, longitude = ${r.longitude} WHERE id = ${r.id};\n`;
+  });
+
+  sql += '\n-- 확인\nSELECT COUNT(*) AS with_coords FROM schools WHERE latitude IS NOT NULL;\n';
+
+  document.getElementById('sqlOutput').value = sql;
+  document.getElementById('resultCard').style.display = 'block';
+  document.getElementById('jsonCard').style.display = 'block';
+}
+
+function copySQL() {
+  const ta = document.getElementById('sqlOutput');
+  ta.select();
+  document.execCommand('copy');
+  alert('SQL이 클립보드에 복사되었습니다!\nSupabase SQL Editor에 붙여넣고 Run 하세요.');
+}
+
+function downloadSQL() {
+  const sql = document.getElementById('sqlOutput').value;
+  const blob = new Blob([sql], { type: 'text/sql;charset=utf-8' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = '004_geocoded_coordinates.sql';
+  a.click();
+}
+
+function downloadJSON() {
+  // 기존 schools.json 구조에 좌표만 업데이트
+  fetch('/src/data/schools.json').then(r => r.json()).then(existingSchools => {
+    updateAndDownload(existingSchools);
+  }).catch(() => {
+    // fetch 실패 시 results만으로 생성
+    updateAndDownload(null);
+  });
+}
+
+function updateAndDownload(existingSchools) {
+  let output;
+  if (existingSchools && Array.isArray(existingSchools)) {
+    output = existingSchools.map(s => {
+      const geocoded = results.find(r => r.id === s.id && r.status === 'ok');
+      if (geocoded) {
+        return { ...s, latitude: geocoded.latitude, longitude: geocoded.longitude };
+      }
+      return s;
+    });
+  } else {
+    output = results.filter(r => r.status === 'ok').map(r => ({
+      id: r.id, name: r.name, address: r.address,
+      latitude: r.latitude, longitude: r.longitude,
+    }));
+  }
+
+  const blob = new Blob([JSON.stringify(output, null, 2)], { type: 'application/json;charset=utf-8' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'schools.json';
+  a.click();
+}
+</script>
+</body>
+</html>

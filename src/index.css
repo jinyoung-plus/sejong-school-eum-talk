@@ -1,0 +1,133 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply bg-surface-bg text-navy-700 font-sans;
+  }
+
+  /* 스크롤바 커스텀 */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-navy-200 rounded-full;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-navy-300;
+  }
+}
+
+@layer components {
+  /* 카드 베이스 */
+  .card {
+    @apply bg-white rounded-[12px] shadow-card transition-shadow duration-200;
+  }
+  .card:hover {
+    @apply shadow-card-lg;
+  }
+
+  /* 그라데이션 배지 */
+  .badge-school {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold;
+  }
+  .badge-kindergarten {
+    @apply bg-pink-50 text-school-kindergarten;
+  }
+  .badge-elementary {
+    @apply bg-blue-50 text-school-elementary;
+  }
+  .badge-middle {
+    @apply bg-green-50 text-school-middle;
+  }
+  .badge-high {
+    @apply bg-yellow-50 text-school-high;
+  }
+  .badge-special {
+    @apply bg-purple-50 text-school-special;
+  }
+
+  /* 버튼 스타일 */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 px-5 py-2.5
+           bg-primary-500 text-white font-semibold rounded-[10px]
+           hover:bg-primary-600 active:bg-primary-700
+           transition-all duration-200 shadow-sm hover:shadow-md;
+  }
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 px-5 py-2.5
+           bg-white text-navy-600 font-semibold rounded-[10px]
+           border border-navy-200 hover:border-primary-300
+           hover:bg-primary-50 transition-all duration-200;
+  }
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 px-4 py-2
+           text-navy-500 font-medium rounded-[8px]
+           hover:bg-navy-50 transition-all duration-200;
+  }
+
+  /* 입력 필드 */
+  .input-field {
+    @apply w-full px-4 py-2.5 bg-white border border-navy-200
+           rounded-[10px] text-navy-700 placeholder-navy-300
+           focus:outline-none focus:ring-2 focus:ring-primary-300 focus:border-primary-400
+           transition-all duration-200;
+  }
+
+  /* 네비게이션 링크 */
+  .nav-link {
+    @apply relative px-3 py-2 text-sm font-medium text-navy-300
+           hover:text-white transition-colors duration-200;
+  }
+  .nav-link.active {
+    @apply text-white;
+  }
+  .nav-link.active::after {
+    content: '';
+    @apply absolute bottom-0 left-1/2 -translate-x-1/2 w-5 h-0.5 bg-primary-400 rounded-full;
+  }
+
+  /* 섹션 타이틀 */
+  .section-title {
+    @apply text-2xl font-bold text-navy-700 tracking-tight;
+  }
+  .section-subtitle {
+    @apply text-sm text-navy-400 mt-1;
+  }
+
+  /* 내부전용 잠금 오버레이 */
+  .locked-overlay {
+    @apply absolute inset-0 bg-navy-700/60 backdrop-blur-sm rounded-[12px]
+           flex flex-col items-center justify-center gap-2 text-white;
+  }
+}
+
+@layer utilities {
+  /* 텍스트 그라데이션 */
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary-400 to-primary-600;
+  }
+
+  /* 글래스모피즘 */
+  .glass {
+    @apply bg-white/70 backdrop-blur-md border border-white/20;
+  }
+
+  /* 애니메이션 딜레이 유틸 */
+  .delay-100 { animation-delay: 100ms; }
+  .delay-200 { animation-delay: 200ms; }
+  .delay-300 { animation-delay: 300ms; }
+  .delay-400 { animation-delay: 400ms; }
+  .delay-500 { animation-delay: 500ms; }
+}

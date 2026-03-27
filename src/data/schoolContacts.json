@@ -1,0 +1,2770 @@
+[
+  {
+    "school_id": 1,
+    "school_name": "조치원대동초병설유",
+    "principal": {
+      "name": "김경안",
+      "phone": "044-861-4600"
+    },
+    "vice_principal": {
+      "name": "김은주",
+      "phone": "044-861-4691"
+    },
+    "admin": {
+      "name": null,
+      "phone": null
+    }
+  },
+  {
+    "school_id": 2,
+    "school_name": "조치원명동초병설유",
+    "principal": {
+      "name": "김지영",
+      "phone": "044-865-2754"
+    },
+    "vice_principal": {
+      "name": null,
+      "phone": null
+    },
+    "admin": {
+      "name": null,
+      "phone": null
+    }
+  },
+  {
+    "school_id": 3,
+    "school_name": "조치원교동초병설유",
+    "principal": {
+      "name": "한형주",
+      "phone": "044-902-4803"
+    },
+    "vice_principal": {
+      "name": null,
+      "phone": null
+    },
+    "admin": {
+      "name": null,
+      "phone": null
+    }
+  },
+  {
+    "school_id": 4,
+    "school_name": "조치원신봉초병설유",
+    "principal": {
+      "name": "김미화",
+      "phone": "044-862-3922"
+    },
+    "vice_principal": {
+      "name": null,
+      "phone": null
+    },
+    "admin": {
+      "name": null,
+      "phone": null
+    }
+  },
+  {
+    "school_id": 5,
+    "school_name": "연동초병설유",
+    "principal": {
+      "name": "서기원",
+      "phone": "044-864-7039"
+    },
+    "vice_principal": {
+      "name": null,
+      "phone": null
+    },
+    "admin": {
+      "name": null,
+      "phone": null
+    }
+  },
+  {
+    "school_id": 6,
+    "school_name": "세종도원초병설유",
+    "principal": {
+      "name": "이수진",
+      "phone": "044-960-8601"
+    },
+    "vice_principal": {
+      "name": null,
+      "phone": null
+    },
+    "admin": {
+      "name": null,
+      "phone": null
+    }
+  },
+  {
+    "school_id": 7,
+    "school_name": "연서초병설유",
+    "principal": {
+      "name": "이강의",
+      "phone": "044-867-8033"
+    },
+    "vice_principal": {
+      "name": null,
+      "phone": null
+    },
+    "admin": {
+      "name": null,
+      "phone": null
+    }
+  },
+  {
+    "school_id": 8,
+    "school_name": "쌍류초병설유",
+    "principal": {
+      "name": "최경희",
+      "phone": "044-863-0484"
+    },
+    "vice_principal": {
+      "name": null,
+      "phone": null
+    },
+    "admin": {
+      "name": null,
+      "phone": null
+    }
+  },
+  {
+    "school_id": 9,
+    "school_name": "연봉초병설유",
+    "principal": {
+      "name": "박은주",
+      "phone": "044-867-0004"
+    },
+    "vice_principal": {
+      "name": null,
+      "phone": null
+    },
+    "admin": {
+      "name": null,
+      "phone": null
+    }
+  },
+  {
+    "school_id": 10,
+    "school_name": "연남초병설유",
+    "principal": {
+      "name": "조정대",
+      "phone": "044-863-4501"
+    },
+    "vice_principal": {
+      "name": null,
+      "phone": null
+    },
+    "admin": {
+      "name": null,
+      "phone": null
+    }
+  },
+  {
+    "school_id": 11,
+    "school_name": "금남초병설유",
+    "principal": {
+      "name": "피대섭",
+      "phone": "044-866-7152"
+    },
+    "vice_principal": {
+      "name": null,
+      "phone": null
+    },
+    "admin": {
+      "name": null,
+      "phone": null
+    }
+  },
+  {
+    "school_id": 12,
+    "school_name": "감성초병설유",
+    "principal": {
+      "name": "김명숙",
+      "phone": "044-866-7400"
+    },
+    "vice_principal": {
+      "name": null,
+      "phone": null
+    },
+    "admin": {
+      "name": null,
+      "phone": null
+    }
+  },
+  {
+    "school_id": 13,
+    "school_name": "전의초병설유",
+    "principal": {
+      "name": "조일행",
+      "phone": "044-863-1453"
+    },
+    "vice_principal": {
+      "name": null,
+      "phone": null
+    },
+    "admin": {
+      "name": null,
+      "phone": null
+    }
+  },
+  {
+    "school_id": 14,
+    "school_name": "소정초병설유",
+    "principal": {
+      "name": "서태성",
+      "phone": "044-566-6031"
+    },
+    "vice_principal": {
+      "name": null,
+      "phone": null
+    },
+    "admin": {
+      "name": null,
+      "phone": null
+    }
+  },
+  {
+    "school_id": 15,
+    "school_name": "전동초병설유",
+    "principal": {
+      "name": "이경희",
+      "phone": "044-863-1595"
+    },
+    "vice_principal": {
+      "name": null,
+      "phone": null
+    },
+    "admin": {
+      "name": null,
+      "phone": null
+    }
+  },
+  {
+    "school_id": 16,
+    "school_name": "부강초병설유",
+    "principal": {
+      "name": "김태환",
+      "phone": "044-868-9263"
+    },
+    "vice_principal": {
+      "name": null,
+      "phone": null
+    },
+    "admin": {
+      "name": null,
+      "phone": null
+    }
+  },
+  {
+    "school_id": 17,
+    "school_name": "장기초병설유",
+    "principal": {
+      "name": "윤명희",
+      "phone": "044-857-1036"
+    },
+    "vice_principal": {
+      "name": null,
+      "phone": null
+    },
+    "admin": {
+      "name": null,
+      "phone": null
+    }
+  },
+  {
+    "school_id": 18,
+    "school_name": "의랑초병설유",
+    "principal": {
+      "name": "임미경",
+      "phone": "044-852-6870"
+    },
+    "vice_principal": {
+      "name": null,
+      "phone": null
+    },
+    "admin": {
+      "name": null,
+      "phone": null
+    }
+  },
+  {
+    "school_id": 19,
+    "school_name": "솔빛초병설유",
+    "principal": {
+      "name": "최수영",
+      "phone": "044-410-2501"
+    },
+    "vice_principal": {
+      "name": "문경선",
+      "phone": "044-410-2591"
+    },
+    "admin": {
+      "name": null,
+      "phone": null
+    }
+  },
+  {
+    "school_id": 20,
+    "school_name": "나루초병설유",
+    "principal": {
+      "name": "채명숙",
+      "phone": "044-960-9601"
+    },
+    "vice_principal": {
+      "name": "김인숙",
+      "phone": "044-960-9701"
+    },
+    "admin": {
+      "name": null,
+      "phone": null
+    }
+  },
+  {
+    "school_id": 21,
+    "school_name": "참샘유",
+    "principal": {
+      "name": "박소영",
+      "phone": "044-868-1792"
+    },
+    "vice_principal": {
+      "name": "김금숙",
+      "phone": "044-868-1793"
+    },
+    "admin": {
+      "name": "한병휘",
+      "phone": "044-868-1791"
+    }
+  },
+  {
+    "school_id": 22,
+    "school_name": "한솔유",
+    "principal": {
+      "name": "송희숙",
+      "phone": "044-410-4500"
+    },
+    "vice_principal": {
+      "name": "정선영",
+      "phone": "044-410-4510"
+    },
+    "admin": {
+      "name": "정소영",
+      "phone": "044-410-4503"
+    }
+  },
+  {
+    "school_id": 23,
+    "school_name": "도담유",
+    "principal": {
+      "name": "김용주",
+      "phone": "044-715-5407"
+    },
+    "vice_principal": {
+      "name": "김태은",
+      "phone": "044-715-5401"
+    },
+    "admin": {
+      "name": "변성현",
+      "phone": "044-715-5402"
+    }
+  },
+  {
+    "school_id": 24,
+    "school_name": "연세유",
+    "principal": {
+      "name": "김숙자",
+      "phone": "044-860-6524"
+    },
+    "vice_principal": {
+      "name": "양유리",
+      "phone": "044-860-6523"
+    },
+    "admin": {
+      "name": "장정용",
+      "phone": "044-860-6521"
+    }
+  },
+  {
+    "school_id": 25,
+    "school_name": "미르유",
+    "principal": {
+      "name": "심현심",
+      "phone": "044-998-1811"
+    },
+    "vice_principal": {
+      "name": "이영지",
+      "phone": "044-998-1812"
+    },
+    "admin": {
+      "name": "유선옥",
+      "phone": "044-998-1819"
+    }
+  },
+  {
+    "school_id": 26,
+    "school_name": "아름유",
+    "principal": {
+      "name": "박아랑",
+      "phone": "044-960-2941"
+    },
+    "vice_principal": {
+      "name": "이유화",
+      "phone": "044-960-2942"
+    },
+    "admin": {
+      "name": "김소영",
+      "phone": "044-960-2946"
+    }
+  },
+  {
+    "school_id": 27,
+    "school_name": "가온유",
+    "principal": {
+      "name": "이여진",
+      "phone": "044-998-2681"
+    },
+    "vice_principal": {
+      "name": "이길자",
+      "phone": "044-998-2682"
+    },
+    "admin": {
+      "name": "고주희",
+      "phone": "044-998-2689"
+    }
+  },
+  {
+    "school_id": 28,
+    "school_name": "연양유",
+    "principal": {
+      "name": "박근순",
+      "phone": "044-998-4281"
+    },
+    "vice_principal": {
+      "name": "윤은숙",
+      "phone": "044-998-4282"
+    },
+    "admin": {
+      "name": "이현대",
+      "phone": "044-998-4283"
+    }
+  },
+  {
+    "school_id": 29,
+    "school_name": "나래유",
+    "principal": {
+      "name": "이현주",
+      "phone": "044-902-8381"
+    },
+    "vice_principal": {
+      "name": "김가람",
+      "phone": "044-902-8382"
+    },
+    "admin": {
+      "name": "이진상",
+      "phone": "044-902-8387"
+    }
+  },
+  {
+    "school_id": 30,
+    "school_name": "양지유",
+    "principal": {
+      "name": "이미란",
+      "phone": "044-902-4381"
+    },
+    "vice_principal": {
+      "name": "김은경",
+      "phone": "044-902-4382"
+    },
+    "admin": {
+      "name": "박미진",
+      "phone": "044-902-4383"
+    }
+  },
+  {
+    "school_id": 31,
+    "school_name": "고운유",
+    "principal": {
+      "name": "최혜정",
+      "phone": "044-903-2731"
+    },
+    "vice_principal": {
+      "name": "원아영",
+      "phone": "044-903-2732"
+    },
+    "admin": {
+      "name": "오미향",
+      "phone": "044-903-2737"
+    }
+  },
+  {
+    "school_id": 32,
+    "school_name": "두루유",
+    "principal": {
+      "name": "오종영",
+      "phone": "044-903-3661"
+    },
+    "vice_principal": {
+      "name": "한설아",
+      "phone": "044-903-3662"
+    },
+    "admin": {
+      "name": "양진용",
+      "phone": "044-903-3664"
+    }
+  },
+  {
+    "school_id": 33,
+    "school_name": "슬기유",
+    "principal": {
+      "name": "이경선",
+      "phone": "044-903-2561"
+    },
+    "vice_principal": {
+      "name": "이현아",
+      "phone": "044-903-2562"
+    },
+    "admin": {
+      "name": "김지현",
+      "phone": "044-903-2563"
+    }
+  },
+  {
+    "school_id": 34,
+    "school_name": "온빛유",
+    "principal": {
+      "name": "최명희",
+      "phone": "044-903-4381"
+    },
+    "vice_principal": {
+      "name": "전현숙",
+      "phone": "044-903-4382"
+    },
+    "admin": {
+      "name": "김현주",
+      "phone": "044-903-4383"
+    }
+  },
+  {
+    "school_id": 35,
+    "school_name": "으뜸유",
+    "principal": {
+      "name": "김소연",
+      "phone": "044-903-3531"
+    },
+    "vice_principal": {
+      "name": "이현경",
+      "phone": "044-903-3532"
+    },
+    "admin": {
+      "name": "최정은",
+      "phone": "044-903-3537"
+    }
+  },
+  {
+    "school_id": 36,
+    "school_name": "올망유",
+    "principal": {
+      "name": "정윤숙",
+      "phone": "044-903-3731"
+    },
+    "vice_principal": {
+      "name": "민경자",
+      "phone": "044-903-3732"
+    },
+    "admin": {
+      "name": "최숙",
+      "phone": "044-903-3737"
+    }
+  },
+  {
+    "school_id": 37,
+    "school_name": "종촌유",
+    "principal": {
+      "name": "박종미",
+      "phone": "044-903-3451"
+    },
+    "vice_principal": {
+      "name": "이민정",
+      "phone": "044-903-3452"
+    },
+    "admin": {
+      "name": "나혜정",
+      "phone": "044-903-3456"
+    }
+  },
+  {
+    "school_id": 38,
+    "school_name": "도란유",
+    "principal": {
+      "name": "천은영",
+      "phone": "044-903-1271"
+    },
+    "vice_principal": {
+      "name": "정윤미",
+      "phone": "044-903-1272"
+    },
+    "admin": {
+      "name": "김연성",
+      "phone": "044-903-1277"
+    }
+  },
+  {
+    "school_id": 39,
+    "school_name": "다빛유",
+    "principal": {
+      "name": "박영미",
+      "phone": "044-903-0381"
+    },
+    "vice_principal": {
+      "name": "이연미",
+      "phone": "044-903-0382"
+    },
+    "admin": {
+      "name": "임혜선",
+      "phone": "044-903-0371"
+    }
+  },
+  {
+    "school_id": 40,
+    "school_name": "늘봄유",
+    "principal": {
+      "name": "김미현",
+      "phone": "044-861-7331"
+    },
+    "vice_principal": {
+      "name": "곽경애",
+      "phone": "044-861-7332"
+    },
+    "admin": {
+      "name": "원재영",
+      "phone": "044-861-7337"
+    }
+  },
+  {
+    "school_id": 41,
+    "school_name": "초롱별유",
+    "principal": {
+      "name": "김영순",
+      "phone": "044-999-5641"
+    },
+    "vice_principal": {
+      "name": "이영진",
+      "phone": "044-999-5642"
+    },
+    "admin": {
+      "name": "강순덕",
+      "phone": "044-999-5643"
+    }
+  },
+  {
+    "school_id": 42,
+    "school_name": "가락유",
+    "principal": {
+      "name": "장미라",
+      "phone": "044-999-7471"
+    },
+    "vice_principal": {
+      "name": "유순옥",
+      "phone": "044-999-7472"
+    },
+    "admin": {
+      "name": "한진애",
+      "phone": "044-999-7475"
+    }
+  },
+  {
+    "school_id": 43,
+    "school_name": "보람유",
+    "principal": {
+      "name": "나미라",
+      "phone": "044-999-7631"
+    },
+    "vice_principal": {
+      "name": "조혜진",
+      "phone": "044-999-7632"
+    },
+    "admin": {
+      "name": "이윤미",
+      "phone": "044-999-7637"
+    }
+  },
+  {
+    "school_id": 44,
+    "school_name": "소담유",
+    "principal": {
+      "name": "주미연",
+      "phone": "044-999-6131"
+    },
+    "vice_principal": {
+      "name": "허선아",
+      "phone": "044-999-6132"
+    },
+    "admin": {
+      "name": "김미숙",
+      "phone": "044-999-6137"
+    }
+  },
+  {
+    "school_id": 45,
+    "school_name": "새샘유",
+    "principal": {
+      "name": "이홍옥",
+      "phone": "044-999-5381"
+    },
+    "vice_principal": {
+      "name": "최현숙",
+      "phone": "044-999-5382"
+    },
+    "admin": {
+      "name": "이희",
+      "phone": "044-999-5387"
+    }
+  },
+  {
+    "school_id": 46,
+    "school_name": "새롬유",
+    "principal": {
+      "name": "한영지",
+      "phone": "044-902-3881"
+    },
+    "vice_principal": {
+      "name": "채미화",
+      "phone": "044-902-3882"
+    },
+    "admin": {
+      "name": "박지숙",
+      "phone": "044-902-3887"
+    }
+  },
+  {
+    "school_id": 47,
+    "school_name": "새뜸유",
+    "principal": {
+      "name": "박송이",
+      "phone": "044-902-3231"
+    },
+    "vice_principal": {
+      "name": "전현정",
+      "phone": "044-902-3232"
+    },
+    "admin": {
+      "name": "김은영",
+      "phone": "044-902-3237"
+    }
+  },
+  {
+    "school_id": 48,
+    "school_name": "가득유",
+    "principal": {
+      "name": "고미선",
+      "phone": "044-902-3431"
+    },
+    "vice_principal": {
+      "name": "원옥분",
+      "phone": "044-902-3432"
+    },
+    "admin": {
+      "name": "박미진",
+      "phone": "044-902-3433"
+    }
+  },
+  {
+    "school_id": 49,
+    "school_name": "한빛유",
+    "principal": {
+      "name": "유지혜",
+      "phone": "044-902-4131"
+    },
+    "vice_principal": {
+      "name": "임현아",
+      "phone": "044-902-4132"
+    },
+    "admin": {
+      "name": "김은정",
+      "phone": "044-902-4137"
+    }
+  },
+  {
+    "school_id": 50,
+    "school_name": "여울유",
+    "principal": {
+      "name": "이용건",
+      "phone": "044-410-2581"
+    },
+    "vice_principal": {
+      "name": "김선영",
+      "phone": "044-410-2582"
+    },
+    "admin": {
+      "name": "송미림",
+      "phone": "044-410-2583"
+    }
+  },
+  {
+    "school_id": 51,
+    "school_name": "글벗유",
+    "principal": {
+      "name": "정해주",
+      "phone": "044-410-6061"
+    },
+    "vice_principal": {
+      "name": "양은미",
+      "phone": "044-410-6062"
+    },
+    "admin": {
+      "name": "이수미",
+      "phone": "044-410-6063"
+    }
+  },
+  {
+    "school_id": 52,
+    "school_name": "새솔유",
+    "principal": {
+      "name": "조성진",
+      "phone": "044-902-9851"
+    },
+    "vice_principal": {
+      "name": "김미현",
+      "phone": "044-902-9852"
+    },
+    "admin": {
+      "name": "배정미",
+      "phone": "044-902-9856"
+    }
+  },
+  {
+    "school_id": 53,
+    "school_name": "다정유",
+    "principal": {
+      "name": "정미옥",
+      "phone": "044-902-8641"
+    },
+    "vice_principal": {
+      "name": "이지은",
+      "phone": "044-902-8642"
+    },
+    "admin": {
+      "name": "이다운",
+      "phone": "044-902-8643"
+    }
+  },
+  {
+    "school_id": 54,
+    "school_name": "새움유",
+    "principal": {
+      "name": "배현진",
+      "phone": "044-902-7771"
+    },
+    "vice_principal": {
+      "name": "최선경",
+      "phone": "044-902-7772"
+    },
+    "admin": {
+      "name": "한희정",
+      "phone": "044-902-7770"
+    }
+  },
+  {
+    "school_id": 55,
+    "school_name": "한결유",
+    "principal": {
+      "name": "최은주",
+      "phone": "044-902-6783"
+    },
+    "vice_principal": {
+      "name": "이경옥",
+      "phone": "044-902-6782"
+    },
+    "admin": {
+      "name": "정복임",
+      "phone": "044-902-6781"
+    }
+  },
+  {
+    "school_id": 56,
+    "school_name": "해들유",
+    "principal": {
+      "name": "김미선",
+      "phone": "044-960-9651"
+    },
+    "vice_principal": {
+      "name": "이영미",
+      "phone": "044-960-9652"
+    },
+    "admin": {
+      "name": "허한솔",
+      "phone": "044-960-9653"
+    }
+  },
+  {
+    "school_id": 57,
+    "school_name": "대평유",
+    "principal": {
+      "name": "최연미",
+      "phone": "044-905-1001"
+    },
+    "vice_principal": {
+      "name": "최주영",
+      "phone": "044-905-1002"
+    },
+    "admin": {
+      "name": "차현실",
+      "phone": "044-905-1003"
+    }
+  },
+  {
+    "school_id": 58,
+    "school_name": "솔빛숲유",
+    "principal": {
+      "name": "진선미",
+      "phone": "044-905-0601"
+    },
+    "vice_principal": {
+      "name": "최희경",
+      "phone": "044-905-0602"
+    },
+    "admin": {
+      "name": "박효미",
+      "phone": "044-905-0603"
+    }
+  },
+  {
+    "school_id": 59,
+    "school_name": "반곡유",
+    "principal": {
+      "name": "한미선",
+      "phone": "044-905-1201"
+    },
+    "vice_principal": {
+      "name": "김미경",
+      "phone": "044-905-1202"
+    },
+    "admin": {
+      "name": "김현정",
+      "phone": "044-905-1203"
+    }
+  },
+  {
+    "school_id": 60,
+    "school_name": "해밀유",
+    "principal": {
+      "name": "김옥란",
+      "phone": "044-905-3101"
+    },
+    "vice_principal": {
+      "name": "안선진",
+      "phone": "044-905-3102"
+    },
+    "admin": {
+      "name": "김영현",
+      "phone": "044-905-3103"
+    }
+  },
+  {
+    "school_id": 61,
+    "school_name": "나성유",
+    "principal": {
+      "name": "박미성",
+      "phone": "044-905-3501"
+    },
+    "vice_principal": {
+      "name": "이경선",
+      "phone": "044-905-3502"
+    },
+    "admin": {
+      "name": "김지숙",
+      "phone": "044-905-3503"
+    }
+  },
+  {
+    "school_id": 62,
+    "school_name": "집현유",
+    "principal": {
+      "name": "이미순",
+      "phone": "044-905-2401"
+    },
+    "vice_principal": {
+      "name": "유정숙",
+      "phone": "044-905-2402"
+    },
+    "admin": {
+      "name": "이경희",
+      "phone": "044-905-2403"
+    }
+  },
+  {
+    "school_id": 63,
+    "school_name": "바른유",
+    "principal": {
+      "name": "박해연",
+      "phone": "044-905-2701"
+    },
+    "vice_principal": {
+      "name": "김윤복",
+      "phone": "044-905-2702"
+    },
+    "admin": {
+      "name": "김숙영",
+      "phone": "044-905-2720"
+    }
+  },
+  {
+    "school_id": 64,
+    "school_name": "산울유",
+    "principal": {
+      "name": "민현숙",
+      "phone": "044-905-5401"
+    },
+    "vice_principal": {
+      "name": "임윤경",
+      "phone": "044-905-5402"
+    },
+    "admin": {
+      "name": "권은경",
+      "phone": "044-905-5441"
+    }
+  },
+  {
+    "school_id": 65,
+    "school_name": "조치원대동초",
+    "principal": {
+      "name": "김경안",
+      "phone": "044-861-4600"
+    },
+    "vice_principal": {
+      "name": "이윤숙",
+      "phone": "044-861-4602"
+    },
+    "admin": {
+      "name": "이정수",
+      "phone": "044-861-4603"
+    }
+  },
+  {
+    "school_id": 66,
+    "school_name": "조치원명동초",
+    "principal": {
+      "name": "김지영",
+      "phone": "044-865-2754"
+    },
+    "vice_principal": {
+      "name": "이영주",
+      "phone": "044-863-5781"
+    },
+    "admin": {
+      "name": "김정순",
+      "phone": "044-865-2245"
+    }
+  },
+  {
+    "school_id": 67,
+    "school_name": "조치원교동초",
+    "principal": {
+      "name": "한형주",
+      "phone": "044-902-4801"
+    },
+    "vice_principal": {
+      "name": "서희석",
+      "phone": "044-902-4802"
+    },
+    "admin": {
+      "name": "김정희",
+      "phone": "044-902-4803"
+    }
+  },
+  {
+    "school_id": 68,
+    "school_name": "조치원신봉초",
+    "principal": {
+      "name": "김미화",
+      "phone": "044-902-1401"
+    },
+    "vice_principal": {
+      "name": "조현옥",
+      "phone": "044-902-1403"
+    },
+    "admin": {
+      "name": "박은하",
+      "phone": "044-902-1482"
+    }
+  },
+  {
+    "school_id": 69,
+    "school_name": "연동초",
+    "principal": {
+      "name": "서기원",
+      "phone": "044-864-7039"
+    },
+    "vice_principal": {
+      "name": "유미선",
+      "phone": "044-864-9300"
+    },
+    "admin": {
+      "name": "변수아",
+      "phone": "044-864-9380"
+    }
+  },
+  {
+    "school_id": 70,
+    "school_name": "세종도원초",
+    "principal": {
+      "name": "이수진",
+      "phone": "044-960-8601"
+    },
+    "vice_principal": {
+      "name": "진헌준",
+      "phone": "044-960-8602"
+    },
+    "admin": {
+      "name": "김정란",
+      "phone": "044-960-8603"
+    }
+  },
+  {
+    "school_id": 71,
+    "school_name": "연서초",
+    "principal": {
+      "name": "이강의",
+      "phone": "044-867-8033"
+    },
+    "vice_principal": {
+      "name": "남정아",
+      "phone": "044-867-7033"
+    },
+    "admin": {
+      "name": "조성하",
+      "phone": "044-867-7032"
+    }
+  },
+  {
+    "school_id": 72,
+    "school_name": "쌍류초",
+    "principal": {
+      "name": "최경희",
+      "phone": "044-863-0484"
+    },
+    "vice_principal": {
+      "name": "배상태",
+      "phone": "044-863-0250"
+    },
+    "admin": {
+      "name": "안재현",
+      "phone": "044-863-1929"
+    }
+  },
+  {
+    "school_id": 73,
+    "school_name": "연봉초",
+    "principal": {
+      "name": "박은주",
+      "phone": "044-867-0004"
+    },
+    "vice_principal": {
+      "name": "박세규",
+      "phone": "044-867-6004"
+    },
+    "admin": {
+      "name": "김은주",
+      "phone": "044-867-7024"
+    }
+  },
+  {
+    "school_id": 74,
+    "school_name": "연남초",
+    "principal": {
+      "name": "조정대",
+      "phone": "044-863-4501"
+    },
+    "vice_principal": {
+      "name": "최정아",
+      "phone": "044-863-4500"
+    },
+    "admin": {
+      "name": "박병우",
+      "phone": "044-863-4504"
+    }
+  },
+  {
+    "school_id": 75,
+    "school_name": "수왕초",
+    "principal": {
+      "name": "홍석표",
+      "phone": "044-863-4357"
+    },
+    "vice_principal": {
+      "name": "주경희",
+      "phone": "044-863-4101"
+    },
+    "admin": {
+      "name": "김영옥",
+      "phone": "044-863-4164"
+    }
+  },
+  {
+    "school_id": 76,
+    "school_name": "금남초",
+    "principal": {
+      "name": "피대섭",
+      "phone": "044-866-7152"
+    },
+    "vice_principal": {
+      "name": "이우준",
+      "phone": "044-866-7052"
+    },
+    "admin": {
+      "name": "김의순",
+      "phone": "044-866-9715"
+    }
+  },
+  {
+    "school_id": 77,
+    "school_name": "감성초",
+    "principal": {
+      "name": "김명숙",
+      "phone": "044-866-7400"
+    },
+    "vice_principal": {
+      "name": "이정숙",
+      "phone": "044-866-7058"
+    },
+    "admin": {
+      "name": "염진석",
+      "phone": "044-866-8892"
+    }
+  },
+  {
+    "school_id": 78,
+    "school_name": "전의초",
+    "principal": {
+      "name": "조일행",
+      "phone": "044-863-1453"
+    },
+    "vice_principal": {
+      "name": "김태구",
+      "phone": "044-863-1451"
+    },
+    "admin": {
+      "name": "김안기",
+      "phone": "044-863-1450"
+    }
+  },
+  {
+    "school_id": 79,
+    "school_name": "소정초",
+    "principal": {
+      "name": "서태성",
+      "phone": "044-566-6031"
+    },
+    "vice_principal": {
+      "name": "김미경",
+      "phone": "044-566-6060"
+    },
+    "admin": {
+      "name": "양정자",
+      "phone": "044-566-6064"
+    }
+  },
+  {
+    "school_id": 80,
+    "school_name": "전동초",
+    "principal": {
+      "name": "이경희",
+      "phone": "044-863-1595"
+    },
+    "vice_principal": {
+      "name": "김수연",
+      "phone": "044-863-1208"
+    },
+    "admin": {
+      "name": "박주영",
+      "phone": "044-863-1209"
+    }
+  },
+  {
+    "school_id": 81,
+    "school_name": "장기초",
+    "principal": {
+      "name": "윤명희",
+      "phone": "044-857-1036"
+    },
+    "vice_principal": {
+      "name": "이혜영",
+      "phone": "044-857-4066"
+    },
+    "admin": {
+      "name": "이은희",
+      "phone": "044-858-4066"
+    }
+  },
+  {
+    "school_id": 82,
+    "school_name": "의랑초",
+    "principal": {
+      "name": "임미경",
+      "phone": "044-852-6870"
+    },
+    "vice_principal": {
+      "name": "김은경",
+      "phone": "044-852-6871"
+    },
+    "admin": {
+      "name": "남덕우",
+      "phone": "044-852-6872"
+    }
+  },
+  {
+    "school_id": 83,
+    "school_name": "부강초",
+    "principal": {
+      "name": "김태환",
+      "phone": "044-902-1601"
+    },
+    "vice_principal": {
+      "name": "김태성",
+      "phone": "044-902-1602"
+    },
+    "admin": {
+      "name": "남용민",
+      "phone": "044-902-1670"
+    }
+  },
+  {
+    "school_id": 84,
+    "school_name": "참샘초",
+    "principal": {
+      "name": "남윤제",
+      "phone": "044-868-3780"
+    },
+    "vice_principal": {
+      "name": "최은희",
+      "phone": "044-868-3781"
+    },
+    "admin": {
+      "name": "김혜재",
+      "phone": "044-868-3782"
+    }
+  },
+  {
+    "school_id": 85,
+    "school_name": "한솔초",
+    "principal": {
+      "name": "김정수",
+      "phone": "044-410-4300"
+    },
+    "vice_principal": {
+      "name": "이인구",
+      "phone": "044-410-4301"
+    },
+    "admin": {
+      "name": "박성룡",
+      "phone": "044-410-4302"
+    }
+  },
+  {
+    "school_id": 86,
+    "school_name": "도담초",
+    "principal": {
+      "name": "강승재",
+      "phone": "044-410-0100"
+    },
+    "vice_principal": {
+      "name": "신숙",
+      "phone": "044-410-0101"
+    },
+    "admin": {
+      "name": "김지현",
+      "phone": "044-410-0102"
+    }
+  },
+  {
+    "school_id": 87,
+    "school_name": "연세초",
+    "principal": {
+      "name": "이민정",
+      "phone": "044-860-6501"
+    },
+    "vice_principal": {
+      "name": "신중진",
+      "phone": "044-860-6502"
+    },
+    "admin": {
+      "name": "김윤희",
+      "phone": "044-860-6503"
+    }
+  },
+  {
+    "school_id": 88,
+    "school_name": "아름초",
+    "principal": {
+      "name": "김은아",
+      "phone": "044-998-1842"
+    },
+    "vice_principal": {
+      "name": "홍성무",
+      "phone": "044-998-1843"
+    },
+    "admin": {
+      "name": "마혜경",
+      "phone": "044-998-1844"
+    }
+  },
+  {
+    "school_id": 89,
+    "school_name": "연양초",
+    "principal": {
+      "name": "정원식",
+      "phone": "044-998-4203"
+    },
+    "vice_principal": {
+      "name": "백선수",
+      "phone": "044-410-3801"
+    },
+    "admin": {
+      "name": "한지호",
+      "phone": "044-998-4205"
+    }
+  },
+  {
+    "school_id": 90,
+    "school_name": "미르초",
+    "principal": {
+      "name": "김은진",
+      "phone": "044-960-2901"
+    },
+    "vice_principal": {
+      "name": "윤지영",
+      "phone": "044-960-2902"
+    },
+    "admin": {
+      "name": "한상미",
+      "phone": "044-960-2903"
+    }
+  },
+  {
+    "school_id": 91,
+    "school_name": "나래초",
+    "principal": {
+      "name": "김동호",
+      "phone": "044-902-8201"
+    },
+    "vice_principal": {
+      "name": "구은영",
+      "phone": "044-902-8202"
+    },
+    "admin": {
+      "name": "박재영",
+      "phone": "044-902-8301"
+    }
+  },
+  {
+    "school_id": 92,
+    "school_name": "양지초",
+    "principal": {
+      "name": "김영록",
+      "phone": "044-902-4300"
+    },
+    "vice_principal": {
+      "name": "김동주",
+      "phone": "044-902-4301"
+    },
+    "admin": {
+      "name": "신민자",
+      "phone": "044-902-4400"
+    }
+  },
+  {
+    "school_id": 93,
+    "school_name": "두루초",
+    "principal": {
+      "name": "이용선",
+      "phone": "044-903-2701"
+    },
+    "vice_principal": {
+      "name": "김대영",
+      "phone": "044-903-2702"
+    },
+    "admin": {
+      "name": "전유정",
+      "phone": "044-903-2700"
+    }
+  },
+  {
+    "school_id": 94,
+    "school_name": "종촌초",
+    "principal": {
+      "name": "최미연",
+      "phone": "044-903-3601"
+    },
+    "vice_principal": {
+      "name": "남경미",
+      "phone": "044-903-3602"
+    },
+    "admin": {
+      "name": "박동숙",
+      "phone": "044-903-3610"
+    }
+  },
+  {
+    "school_id": 95,
+    "school_name": "으뜸초",
+    "principal": {
+      "name": "정영애",
+      "phone": "044-903-2501"
+    },
+    "vice_principal": {
+      "name": "김경철",
+      "phone": "044-903-2502"
+    },
+    "admin": {
+      "name": "조혜린",
+      "phone": "044-903-2507"
+    }
+  },
+  {
+    "school_id": 96,
+    "school_name": "고운초",
+    "principal": {
+      "name": "임향숙",
+      "phone": "044-903-4301"
+    },
+    "vice_principal": {
+      "name": "신명덕",
+      "phone": "044-903-4302"
+    },
+    "admin": {
+      "name": "이자형",
+      "phone": "044-903-4309"
+    }
+  },
+  {
+    "school_id": 97,
+    "school_name": "다빛초",
+    "principal": {
+      "name": "전은영",
+      "phone": "044-903-3501"
+    },
+    "vice_principal": {
+      "name": "박형순",
+      "phone": "044-903-3502"
+    },
+    "admin": {
+      "name": "배소영",
+      "phone": "044-903-3570"
+    }
+  },
+  {
+    "school_id": 98,
+    "school_name": "온빛초",
+    "principal": {
+      "name": "김은주",
+      "phone": "044-903-3701"
+    },
+    "vice_principal": {
+      "name": "최부영",
+      "phone": "044-903-3702"
+    },
+    "admin": {
+      "name": "정수아",
+      "phone": "044-903-3700"
+    }
+  },
+  {
+    "school_id": 99,
+    "school_name": "늘봄초",
+    "principal": {
+      "name": "조미자",
+      "phone": "044-903-3401"
+    },
+    "vice_principal": {
+      "name": "송민경",
+      "phone": "044-903-3402"
+    },
+    "admin": {
+      "name": "임옥화",
+      "phone": "044-903-3410"
+    }
+  },
+  {
+    "school_id": 100,
+    "school_name": "가락초",
+    "principal": {
+      "name": "박은숙",
+      "phone": "044-903-1201"
+    },
+    "vice_principal": {
+      "name": "최진경",
+      "phone": "044-903-1203"
+    },
+    "admin": {
+      "name": "노희정",
+      "phone": "044-903-1270"
+    }
+  },
+  {
+    "school_id": 101,
+    "school_name": "보람초",
+    "principal": {
+      "name": "이성은",
+      "phone": "044-903-0301"
+    },
+    "vice_principal": {
+      "name": "하경수",
+      "phone": "044-903-0303"
+    },
+    "admin": {
+      "name": "최장민",
+      "phone": "044-903-0371"
+    }
+  },
+  {
+    "school_id": 102,
+    "school_name": "소담초",
+    "principal": {
+      "name": "오선자",
+      "phone": "044-861-7301"
+    },
+    "vice_principal": {
+      "name": "강재준",
+      "phone": "044-861-7302"
+    },
+    "admin": {
+      "name": "이은실",
+      "phone": "044-861-7303"
+    }
+  },
+  {
+    "school_id": 103,
+    "school_name": "새롬초",
+    "principal": {
+      "name": "김상희",
+      "phone": "044-999-5601"
+    },
+    "vice_principal": {
+      "name": "김미진",
+      "phone": "044-999-5701"
+    },
+    "admin": {
+      "name": "안교선",
+      "phone": "044-999-5600"
+    }
+  },
+  {
+    "school_id": 104,
+    "school_name": "새뜸초",
+    "principal": {
+      "name": "김영기",
+      "phone": "044-999-7401"
+    },
+    "vice_principal": {
+      "name": "임쥬리",
+      "phone": "044-999-7501"
+    },
+    "admin": {
+      "name": "정진옥",
+      "phone": "044-999-7403"
+    }
+  },
+  {
+    "school_id": 105,
+    "school_name": "가득초",
+    "principal": {
+      "name": "김영호",
+      "phone": "044-999-7601"
+    },
+    "vice_principal": {
+      "name": "안소영",
+      "phone": "044-999-7670"
+    },
+    "admin": {
+      "name": "사대제",
+      "phone": "044-999-7603"
+    }
+  },
+  {
+    "school_id": 106,
+    "school_name": "여울초",
+    "principal": {
+      "name": "류상의",
+      "phone": "044-999-6101"
+    },
+    "vice_principal": {
+      "name": "류인숙",
+      "phone": "044-999-6103"
+    },
+    "admin": {
+      "name": "송유진",
+      "phone": "044-999-6171"
+    }
+  },
+  {
+    "school_id": 107,
+    "school_name": "글벗초",
+    "principal": {
+      "name": "우상균",
+      "phone": "044-999-5301"
+    },
+    "vice_principal": {
+      "name": "노명진",
+      "phone": "044-999-5400"
+    },
+    "admin": {
+      "name": "김헌경",
+      "phone": "044-999-5303"
+    }
+  },
+  {
+    "school_id": 108,
+    "school_name": "다정초",
+    "principal": {
+      "name": "최탁",
+      "phone": "044-902-3801"
+    },
+    "vice_principal": {
+      "name": "김인숙",
+      "phone": "044-902-3907"
+    },
+    "admin": {
+      "name": "최종문",
+      "phone": "044-902-3803"
+    }
+  },
+  {
+    "school_id": 109,
+    "school_name": "새움초",
+    "principal": {
+      "name": "주영옥",
+      "phone": "044-902-3201"
+    },
+    "vice_principal": {
+      "name": "홍진수",
+      "phone": "044-902-3202"
+    },
+    "admin": {
+      "name": "권윤희",
+      "phone": "044-902-3203"
+    }
+  },
+  {
+    "school_id": 110,
+    "school_name": "한결초",
+    "principal": {
+      "name": "김유수",
+      "phone": "044-902-3401"
+    },
+    "vice_principal": {
+      "name": "최은주",
+      "phone": "044-902-3500"
+    },
+    "admin": {
+      "name": "문지혜",
+      "phone": "044-902-3403"
+    }
+  },
+  {
+    "school_id": 111,
+    "school_name": "대평초",
+    "principal": {
+      "name": "황영옥",
+      "phone": "044-902-4101"
+    },
+    "vice_principal": {
+      "name": "조지현",
+      "phone": "044-902-4103"
+    },
+    "admin": {
+      "name": "김기석",
+      "phone": "044-902-4120"
+    }
+  },
+  {
+    "school_id": 112,
+    "school_name": "솔빛초",
+    "principal": {
+      "name": "최수영",
+      "phone": "044-410-2501"
+    },
+    "vice_principal": {
+      "name": "이정화",
+      "phone": "044-410-2571"
+    },
+    "admin": {
+      "name": "배가영",
+      "phone": "044-410-2583"
+    }
+  },
+  {
+    "school_id": 113,
+    "school_name": "반곡초",
+    "principal": {
+      "name": "백영옥",
+      "phone": "044-410-6001"
+    },
+    "vice_principal": {
+      "name": "정소영",
+      "phone": "044-410-6002"
+    },
+    "admin": {
+      "name": "안현옥",
+      "phone": "044-410-6070"
+    }
+  },
+  {
+    "school_id": 114,
+    "school_name": "해밀초",
+    "principal": {
+      "name": "최수형",
+      "phone": "044-902-9800"
+    },
+    "vice_principal": {
+      "name": "박선정",
+      "phone": "044-902-9901"
+    },
+    "admin": {
+      "name": "이경호",
+      "phone": "044-902-9801"
+    }
+  },
+  {
+    "school_id": 115,
+    "school_name": "나성초",
+    "principal": {
+      "name": "김신숙",
+      "phone": "044-902-8601"
+    },
+    "vice_principal": {
+      "name": "박주호",
+      "phone": "044-902-8700"
+    },
+    "admin": {
+      "name": "조성계",
+      "phone": "044-902-8602"
+    }
+  },
+  {
+    "school_id": 116,
+    "school_name": "집현초",
+    "principal": {
+      "name": "안영순",
+      "phone": "044-902-6701"
+    },
+    "vice_principal": {
+      "name": "김남흥",
+      "phone": "044-902-6780"
+    },
+    "admin": {
+      "name": "김영균",
+      "phone": "044-902-6770"
+    }
+  },
+  {
+    "school_id": 117,
+    "school_name": "나루초",
+    "principal": {
+      "name": "채명숙",
+      "phone": "044-960-9601"
+    },
+    "vice_principal": {
+      "name": "신경혜",
+      "phone": "044-960-9602"
+    },
+    "admin": {
+      "name": "백서연",
+      "phone": "044-960-9610"
+    }
+  },
+  {
+    "school_id": 118,
+    "school_name": "바른초",
+    "principal": {
+      "name": "우태제",
+      "phone": "044-995-9501"
+    },
+    "vice_principal": {
+      "name": "김은영",
+      "phone": "044-995-9502"
+    },
+    "admin": {
+      "name": "박서현",
+      "phone": "044-995-9503"
+    }
+  },
+  {
+    "school_id": 119,
+    "school_name": "산울초",
+    "principal": {
+      "name": "최병호",
+      "phone": "044-960-9350"
+    },
+    "vice_principal": {
+      "name": "정운기",
+      "phone": "044-960-8390"
+    },
+    "admin": {
+      "name": "이순미",
+      "phone": "044-960-9302"
+    }
+  },
+  {
+    "school_id": 120,
+    "school_name": "조치원중",
+    "principal": {
+      "name": "강명화",
+      "phone": "044-863-0771"
+    },
+    "vice_principal": {
+      "name": "안상태",
+      "phone": "044-863-0773"
+    },
+    "admin": {
+      "name": "이수진",
+      "phone": "044-863-0772"
+    }
+  },
+  {
+    "school_id": 121,
+    "school_name": "세종중",
+    "principal": {
+      "name": "박헌정",
+      "phone": "044-864-2070"
+    },
+    "vice_principal": {
+      "name": "곽재희",
+      "phone": "044-864-2072"
+    },
+    "admin": {
+      "name": "박형구",
+      "phone": "044-864-2071"
+    }
+  },
+  {
+    "school_id": 122,
+    "school_name": "연동중",
+    "principal": {
+      "name": "김영대",
+      "phone": "044-864-2043"
+    },
+    "vice_principal": {
+      "name": "전영희",
+      "phone": "044-864-7022"
+    },
+    "admin": {
+      "name": "이현숙",
+      "phone": "044-864-7021"
+    }
+  },
+  {
+    "school_id": 123,
+    "school_name": "연서중",
+    "principal": {
+      "name": "유효종",
+      "phone": "044-902-0901"
+    },
+    "vice_principal": {
+      "name": "김종성",
+      "phone": "044-902-0903"
+    },
+    "admin": {
+      "name": "장인자",
+      "phone": "044-902-0904"
+    }
+  },
+  {
+    "school_id": 124,
+    "school_name": "전의중",
+    "principal": {
+      "name": "이재붕",
+      "phone": "044-863-3202"
+    },
+    "vice_principal": {
+      "name": "소기영",
+      "phone": "044-863-3203"
+    },
+    "admin": {
+      "name": "박광식",
+      "phone": "044-863-3201"
+    }
+  },
+  {
+    "school_id": 125,
+    "school_name": "장기중",
+    "principal": {
+      "name": "백현일",
+      "phone": "044-998-3145"
+    },
+    "vice_principal": {
+      "name": "정진희",
+      "phone": "044-998-3146"
+    },
+    "admin": {
+      "name": "이은영",
+      "phone": "044-998-3147"
+    }
+  },
+  {
+    "school_id": 126,
+    "school_name": "부강중",
+    "principal": {
+      "name": "김창용",
+      "phone": "044-275-4083"
+    },
+    "vice_principal": {
+      "name": "박은영",
+      "phone": "044-275-4082"
+    },
+    "admin": {
+      "name": "강재혁",
+      "phone": "044-275-4081"
+    }
+  },
+  {
+    "school_id": 127,
+    "school_name": "금호중",
+    "principal": {
+      "name": "강승연",
+      "phone": "044-850-0401"
+    },
+    "vice_principal": {
+      "name": "이숙자",
+      "phone": "044-850-0402"
+    },
+    "admin": {
+      "name": "김민진",
+      "phone": "044-850-0408"
+    }
+  },
+  {
+    "school_id": 128,
+    "school_name": "한솔중",
+    "principal": {
+      "name": "안희숙",
+      "phone": "044-902-8800"
+    },
+    "vice_principal": {
+      "name": "조영홍",
+      "phone": "044-902-8801"
+    },
+    "admin": {
+      "name": "이은희",
+      "phone": "044-902-8821"
+    }
+  },
+  {
+    "school_id": 129,
+    "school_name": "도담중",
+    "principal": {
+      "name": "홍순덕",
+      "phone": "044-410-0200"
+    },
+    "vice_principal": {
+      "name": "김익중",
+      "phone": "044-410-0201"
+    },
+    "admin": {
+      "name": "박창수",
+      "phone": "044-410-0202"
+    }
+  },
+  {
+    "school_id": 130,
+    "school_name": "새롬중",
+    "principal": {
+      "name": "박덕경",
+      "phone": "044-998-2651"
+    },
+    "vice_principal": {
+      "name": "권혜영",
+      "phone": "044-998-2650"
+    },
+    "admin": {
+      "name": "서정주",
+      "phone": "044-998-2657"
+    }
+  },
+  {
+    "school_id": 131,
+    "school_name": "아름중",
+    "principal": {
+      "name": "송현숙",
+      "phone": "044-902-1101"
+    },
+    "vice_principal": {
+      "name": "조원익",
+      "phone": "044-902-1102"
+    },
+    "admin": {
+      "name": "김현숙",
+      "phone": "044-902-1051"
+    }
+  },
+  {
+    "school_id": 132,
+    "school_name": "어진중",
+    "principal": {
+      "name": "조성숙",
+      "phone": "044-410-0700"
+    },
+    "vice_principal": {
+      "name": "권혁태",
+      "phone": "044-410-0701"
+    },
+    "admin": {
+      "name": "박성철",
+      "phone": "044-410-0702"
+    }
+  },
+  {
+    "school_id": 133,
+    "school_name": "고운중",
+    "principal": {
+      "name": "류철",
+      "phone": "044-903-3301"
+    },
+    "vice_principal": {
+      "name": "이종희",
+      "phone": "044-903-3303"
+    },
+    "admin": {
+      "name": "정희경",
+      "phone": "044-903-3318"
+    }
+  },
+  {
+    "school_id": 134,
+    "school_name": "두루중",
+    "principal": {
+      "name": "이진남",
+      "phone": "044-903-3101"
+    },
+    "vice_principal": {
+      "name": "김진성",
+      "phone": "044-903-3103"
+    },
+    "admin": {
+      "name": "금기형",
+      "phone": "044-903-3116"
+    }
+  },
+  {
+    "school_id": 135,
+    "school_name": "종촌중",
+    "principal": {
+      "name": "김혜겸",
+      "phone": "044-903-3201"
+    },
+    "vice_principal": {
+      "name": "송형록",
+      "phone": "044-903-3202"
+    },
+    "admin": {
+      "name": "김현아",
+      "phone": "044-903-3223"
+    }
+  },
+  {
+    "school_id": 136,
+    "school_name": "양지중",
+    "principal": {
+      "name": "윤석봉",
+      "phone": "044-903-3001"
+    },
+    "vice_principal": {
+      "name": "곽재근",
+      "phone": "044-903-3002"
+    },
+    "admin": {
+      "name": "김미경",
+      "phone": "044-903-3000"
+    }
+  },
+  {
+    "school_id": 137,
+    "school_name": "소담중",
+    "principal": {
+      "name": "박현미",
+      "phone": "044-905-0201"
+    },
+    "vice_principal": {
+      "name": "박지현",
+      "phone": "044-905-0206"
+    },
+    "admin": {
+      "name": "윤석철",
+      "phone": "044-905-0221"
+    }
+  },
+  {
+    "school_id": 138,
+    "school_name": "새움중",
+    "principal": {
+      "name": "주원석",
+      "phone": "044-999-6501"
+    },
+    "vice_principal": {
+      "name": "조경숙",
+      "phone": "044-999-6503"
+    },
+    "admin": {
+      "name": "유인자",
+      "phone": "044-999-6504"
+    }
+  },
+  {
+    "school_id": 139,
+    "school_name": "새뜸중",
+    "principal": {
+      "name": "박길선",
+      "phone": "044-999-5901"
+    },
+    "vice_principal": {
+      "name": "김미애",
+      "phone": "044-999-5911"
+    },
+    "admin": {
+      "name": "이형표",
+      "phone": "044-999-5903"
+    }
+  },
+  {
+    "school_id": 140,
+    "school_name": "보람중",
+    "principal": {
+      "name": "서재남",
+      "phone": "044-999-6401"
+    },
+    "vice_principal": {
+      "name": "김주연",
+      "phone": "044-999-6411"
+    },
+    "admin": {
+      "name": "이종덕",
+      "phone": "044-999-6403"
+    }
+  },
+  {
+    "school_id": 141,
+    "school_name": "글벗중",
+    "principal": {
+      "name": "조은경",
+      "phone": "044-999-6901"
+    },
+    "vice_principal": {
+      "name": "김송이",
+      "phone": "044-999-6902"
+    },
+    "admin": {
+      "name": "유혜영",
+      "phone": "044-999-6903"
+    }
+  },
+  {
+    "school_id": 142,
+    "school_name": "다정중",
+    "principal": {
+      "name": "최정숙",
+      "phone": "044-902-1801"
+    },
+    "vice_principal": {
+      "name": "한희경",
+      "phone": "044-902-1900"
+    },
+    "admin": {
+      "name": "민정원",
+      "phone": "044-902-1805"
+    }
+  },
+  {
+    "school_id": 143,
+    "school_name": "반곡중",
+    "principal": {
+      "name": "신경숙",
+      "phone": "044-410-3601"
+    },
+    "vice_principal": {
+      "name": "김선미",
+      "phone": "044-410-3610"
+    },
+    "admin": {
+      "name": "서경화",
+      "phone": "044-410-3603"
+    }
+  },
+  {
+    "school_id": 144,
+    "school_name": "해밀중",
+    "principal": {
+      "name": "임정진",
+      "phone": "044-902-7201"
+    },
+    "vice_principal": {
+      "name": "박일숙",
+      "phone": "044-902-7301"
+    },
+    "admin": {
+      "name": "서미선",
+      "phone": "044-902-7200"
+    }
+  },
+  {
+    "school_id": 145,
+    "school_name": "나성중",
+    "principal": {
+      "name": "남광순",
+      "phone": "044-902-0801"
+    },
+    "vice_principal": {
+      "name": "김승기",
+      "phone": "044-902-0810"
+    },
+    "admin": {
+      "name": "김정아",
+      "phone": "044-902-0803"
+    }
+  },
+  {
+    "school_id": 146,
+    "school_name": "집현중",
+    "principal": {
+      "name": "박희동",
+      "phone": "044-902-9601"
+    },
+    "vice_principal": {
+      "name": "이희경",
+      "phone": "044-902-9602"
+    },
+    "admin": {
+      "name": "김미영",
+      "phone": "044-902-9660"
+    }
+  },
+  {
+    "school_id": 147,
+    "school_name": "산울중",
+    "principal": {
+      "name": "최병호",
+      "phone": "044-960-9350"
+    },
+    "vice_principal": {
+      "name": "안은숙",
+      "phone": "044-960-9351"
+    },
+    "admin": {
+      "name": "이순미",
+      "phone": "044-960-9302"
+    }
+  },
+  {
+    "school_id": 148,
+    "school_name": "세종고",
+    "principal": {
+      "name": "이재일",
+      "phone": "044-320-6600"
+    },
+    "vice_principal": {
+      "name": "김은희",
+      "phone": "044-320-6640"
+    },
+    "admin": {
+      "name": "이수미",
+      "phone": "044-320-6703"
+    }
+  },
+  {
+    "school_id": 149,
+    "school_name": "세종여고",
+    "principal": {
+      "name": "이경훈",
+      "phone": "044-862-1081"
+    },
+    "vice_principal": {
+      "name": "윤미진",
+      "phone": "044-862-1083"
+    },
+    "admin": {
+      "name": "강연재",
+      "phone": "044-862-1082"
+    }
+  },
+  {
+    "school_id": 150,
+    "school_name": "세종미래고",
+    "principal": {
+      "name": "이영기",
+      "phone": "044-715-7800"
+    },
+    "vice_principal": {
+      "name": "서명원",
+      "phone": "044-715-7801"
+    },
+    "admin": {
+      "name": "유혜은",
+      "phone": "044-275-4092"
+    }
+  },
+  {
+    "school_id": 151,
+    "school_name": "한솔고",
+    "principal": {
+      "name": "이길재",
+      "phone": "044-410-4100"
+    },
+    "vice_principal": {
+      "name": "김용순",
+      "phone": "044-410-4111"
+    },
+    "admin": {
+      "name": "조재중",
+      "phone": "044-410-4105"
+    }
+  },
+  {
+    "school_id": 152,
+    "school_name": "세종국제고",
+    "principal": {
+      "name": "이경영",
+      "phone": "044-410-0500"
+    },
+    "vice_principal": {
+      "name": "정연주",
+      "phone": "044-410-0501"
+    },
+    "admin": {
+      "name": "고이석",
+      "phone": "044-410-0505"
+    }
+  },
+  {
+    "school_id": 153,
+    "school_name": "도담고",
+    "principal": {
+      "name": "조원근",
+      "phone": "044-410-0301"
+    },
+    "vice_principal": {
+      "name": "손욱형",
+      "phone": "044-410-0340"
+    },
+    "admin": {
+      "name": "강문정",
+      "phone": "044-410-0303"
+    }
+  },
+  {
+    "school_id": 154,
+    "school_name": "아름고",
+    "principal": {
+      "name": "이춘우",
+      "phone": "044-902-6401"
+    },
+    "vice_principal": {
+      "name": "윤기상",
+      "phone": "044-902-6403"
+    },
+    "admin": {
+      "name": "박민수",
+      "phone": "044-902-6465"
+    }
+  },
+  {
+    "school_id": 155,
+    "school_name": "고운고",
+    "principal": {
+      "name": "정평희",
+      "phone": "044-903-2300"
+    },
+    "vice_principal": {
+      "name": "박해성",
+      "phone": "044-903-2311"
+    },
+    "admin": {
+      "name": "강화영",
+      "phone": "044-903-2304"
+    }
+  },
+  {
+    "school_id": 156,
+    "school_name": "두루고",
+    "principal": {
+      "name": "조선진",
+      "phone": "044-903-2220"
+    },
+    "vice_principal": {
+      "name": "안선미",
+      "phone": "044-903-2210"
+    },
+    "admin": {
+      "name": "김현숙",
+      "phone": "044-903-2205"
+    }
+  },
+  {
+    "school_id": 157,
+    "school_name": "세종과학예술영재학교",
+    "principal": {
+      "name": "김승환",
+      "phone": "044-903-1001"
+    },
+    "vice_principal": {
+      "name": "김수미",
+      "phone": "044-903-1100"
+    },
+    "admin": {
+      "name": "성효임",
+      "phone": "044-903-1010"
+    }
+  },
+  {
+    "school_id": 158,
+    "school_name": "종촌고",
+    "principal": {
+      "name": "신주식",
+      "phone": "044-903-2120"
+    },
+    "vice_principal": {
+      "name": "신현호",
+      "phone": "044-903-2655"
+    },
+    "admin": {
+      "name": "진익희",
+      "phone": "044-903-2160"
+    }
+  },
+  {
+    "school_id": 159,
+    "school_name": "양지고",
+    "principal": {
+      "name": "김수동",
+      "phone": "044-903-2001"
+    },
+    "vice_principal": {
+      "name": "김주경",
+      "phone": "044-903-2010"
+    },
+    "admin": {
+      "name": "김덕진",
+      "phone": "044-903-2004"
+    }
+  },
+  {
+    "school_id": 160,
+    "school_name": "보람고",
+    "principal": {
+      "name": "김성태",
+      "phone": "044-999-7101"
+    },
+    "vice_principal": {
+      "name": "오인환",
+      "phone": "044-999-7110"
+    },
+    "admin": {
+      "name": "박지연",
+      "phone": "044-999-7134"
+    }
+  },
+  {
+    "school_id": 161,
+    "school_name": "새롬고",
+    "principal": {
+      "name": "김일환",
+      "phone": "044-999-6301"
+    },
+    "vice_principal": {
+      "name": "고문정",
+      "phone": "044-999-6311"
+    },
+    "admin": {
+      "name": "김자연",
+      "phone": "044-999-6303"
+    }
+  },
+  {
+    "school_id": 162,
+    "school_name": "소담고",
+    "principal": {
+      "name": "최남헌",
+      "phone": "044-902-2201"
+    },
+    "vice_principal": {
+      "name": "김도영",
+      "phone": "044-902-2211"
+    },
+    "admin": {
+      "name": "유은아",
+      "phone": "044-902-2203"
+    }
+  },
+  {
+    "school_id": 163,
+    "school_name": "세종예술고",
+    "principal": {
+      "name": "황덕수",
+      "phone": "044-902-3001"
+    },
+    "vice_principal": {
+      "name": "이수진",
+      "phone": "044-902-3110"
+    },
+    "admin": {
+      "name": "노형래",
+      "phone": "044-902-3010"
+    }
+  },
+  {
+    "school_id": 164,
+    "school_name": "다정고",
+    "principal": {
+      "name": "신중필",
+      "phone": "044-410-3401"
+    },
+    "vice_principal": {
+      "name": "김응현",
+      "phone": "044-410-3411"
+    },
+    "admin": {
+      "name": "정은자",
+      "phone": "044-410-3400"
+    }
+  },
+  {
+    "school_id": 165,
+    "school_name": "반곡고",
+    "principal": {
+      "name": "임옥희",
+      "phone": "044-902-7701"
+    },
+    "vice_principal": {
+      "name": "조융기",
+      "phone": "044-902-7711"
+    },
+    "admin": {
+      "name": "유재찬",
+      "phone": "044-902-7703"
+    }
+  },
+  {
+    "school_id": 166,
+    "school_name": "세종장영실고",
+    "principal": {
+      "name": "이현영",
+      "phone": "044-902-2801"
+    },
+    "vice_principal": {
+      "name": "이은경",
+      "phone": "044-902-2802"
+    },
+    "admin": {
+      "name": "오범수",
+      "phone": "044-902-2805"
+    }
+  },
+  {
+    "school_id": 167,
+    "school_name": "해밀고",
+    "principal": {
+      "name": "임정진",
+      "phone": "044-902-7201"
+    },
+    "vice_principal": {
+      "name": "이은경",
+      "phone": "044-902-8501"
+    },
+    "admin": {
+      "name": "서미선",
+      "phone": "044-902-8500"
+    }
+  },
+  {
+    "school_id": 168,
+    "school_name": "세종캠퍼스고",
+    "principal": {
+      "name": "이정세",
+      "phone": "044-995-8001"
+    },
+    "vice_principal": {
+      "name": "김혜옥",
+      "phone": "044-995-8010"
+    },
+    "admin": {
+      "name": "나진이",
+      "phone": "044-995-8003"
+    }
+  },
+  {
+    "school_id": 169,
+    "school_name": "세종대성고",
+    "principal": {
+      "name": "김인옥",
+      "phone": "044-860-3701"
+    },
+    "vice_principal": {
+      "name": "이상일",
+      "phone": "044-860-3750"
+    },
+    "admin": {
+      "name": "김용중",
+      "phone": "044-860-3702"
+    }
+  },
+  {
+    "school_id": 170,
+    "school_name": "세종누리학교",
+    "principal": {
+      "name": "최기상",
+      "phone": "044-410-2113"
+    },
+    "vice_principal": {
+      "name": "박정애",
+      "phone": "044-410-2100"
+    },
+    "admin": {
+      "name": "박미영",
+      "phone": "044-410-2115"
+    }
+  },
+  {
+    "school_id": 171,
+    "school_name": "세종이음학교",
+    "principal": {
+      "name": "양희주",
+      "phone": "044-995-7101"
+    },
+    "vice_principal": {
+      "name": "도경만",
+      "phone": "044-995-7102"
+    },
+    "admin": {
+      "name": "김의환",
+      "phone": "044-995-7100"
+    }
+  },
+  {
+    "school_id": 172,
+    "school_name": "세종늘벗학교",
+    "principal": {
+      "name": "박옥남",
+      "phone": "044-999-1281"
+    },
+    "vice_principal": {
+      "name": null,
+      "phone": "044-999-1261"
+    },
+    "admin": {
+      "name": "안혜선",
+      "phone": "044-999-1260"
+    }
+  },
+  {
+    "school_id": 173,
+    "school_name": "온세종학교",
+    "principal": {
+      "name": "이정세",
+      "phone": "044-998-2701"
+    },
+    "vice_principal": {
+      "name": "신현숙",
+      "phone": "044-998-2702"
+    },
+    "admin": {
+      "name": "양희진",
+      "phone": "044-998-2750"
+    }
+  }
+]

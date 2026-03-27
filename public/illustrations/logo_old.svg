@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <defs>
+    <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4db3ab"/>
+      <stop offset="100%" stop-color="#0a8a7a"/>
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f7a600"/>
+      <stop offset="100%" stop-color="#e05c2a"/>
+    </linearGradient>
+  </defs>
+  <!-- 배경 -->
+  <rect width="64" height="64" rx="16" fill="url(#logoGrad)"/>
+  <!-- 연결 고리 (이음) -->
+  <circle cx="24" cy="28" r="9" stroke="white" stroke-width="3" fill="none" opacity="0.9"/>
+  <circle cx="36" cy="28" r="9" stroke="white" stroke-width="3" fill="none" opacity="0.9"/>
+  <!-- 학교 지붕 -->
+  <path d="M18 42 L32 34 L46 42" stroke="white" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+  <!-- 건물 -->
+  <rect x="22" y="42" width="20" height="10" rx="2" fill="white" opacity="0.85"/>
+  <!-- 창문 -->
+  <rect x="26" y="44" width="4" height="4" rx="1" fill="url(#logoGrad)" opacity="0.6"/>
+  <rect x="34" y="44" width="4" height="4" rx="1" fill="url(#logoGrad)" opacity="0.6"/>
+  <!-- 반짝이 (AI) -->
+  <circle cx="50" cy="14" r="2" fill="url(#accentGrad)"/>
+  <circle cx="46" cy="18" r="1.2" fill="url(#accentGrad)" opacity="0.6"/>
+</svg>
