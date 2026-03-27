@@ -41,7 +41,6 @@ export function AuthProvider({ children }) {
 
   // profiles 테이블에서 role + display_name 가져오기
   async function fetchProfile(userId, email) {
-    // 매번 DB에서 최신 정보를 가져옴 (캐시 사용 안 함)
     try {
       const { data } = await supabase
         .from('profiles')
@@ -52,16 +51,20 @@ export function AuthProvider({ children }) {
       if (data) {
         if (data.role) setRole(data.role);
         if (data.display_name) setDisplayName(data.display_name);
-        return; // DB에서 성공적으로 가져왔으므로 여기서 끝
+        return;
       }
-    } catch (err) {
-      console.warn('[useAuth] profiles 조회 실패:', err.message);
-    }
 
-    // DB 실패 시에만 fallback
-    if (email?.endsWith('@korea.kr')) setRole('staff');
-    else setRole('public');
-    setDisplayName(''); // 빈 값 → resolvedName에서 email 앞부분 사용
+      // profile이 없음 = 탈퇴한 계정
+      alert('탈퇴 처리된 계정입니다. 다시 가입해주세요.');
+      await signOut();
+      return;
+
+    } catch (err) {
+      // 조회 에러 (RLS 등) — fallback
+      if (email?.endsWith('@korea.kr')) setRole('staff');
+      else setRole('public');
+      setDisplayName('');
+    }
   }
 
   // 이름 변경 (profiles 테이블만 사용, auth.updateUser 사용 안 함)
