@@ -129,7 +129,7 @@ export default function Header() {
                   </div>
                   <span className="text-sm font-medium">
                     {userName}
-                    <span className="text-white/50 font-normal ml-0.5">님!</span>
+                    <span className="text-white/50 font-normal ml-0.5">님</span>
                   </span>
                 </Link>
                 <button
