@@ -76,7 +76,7 @@ export default function MapExplore() {
       {/* 왼쪽 필터 패널 */}
       <div
         className={`absolute md:relative z-20 h-full bg-white shadow-card-lg transition-all duration-300 flex flex-col
-          ${showFilter ? 'w-80' : 'w-0 overflow-hidden'}`}
+          ${showFilter ? 'w-[75vw] max-w-80' : 'w-0 overflow-hidden'}`}
       >
         <div className="p-4 flex-1 overflow-y-auto">
           <div className="flex items-center justify-between mb-5">
