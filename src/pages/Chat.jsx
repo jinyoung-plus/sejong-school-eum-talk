@@ -365,7 +365,7 @@ export default function Chat() {
             </div>
             <h2 className="text-xl font-bold text-gray-900 mb-1">무엇이든 물어보세요!</h2>
             <p className="text-gray-500 text-sm mb-8 max-w-xs">
-              세종시 173개 학교에 대한 정보를<br />AI가 빠르게 찾아드립니다.
+              세종시 학교에 대한 정보를<br />AI가 빠르게 찾아드립니다.
             </p>
 
             <div className="grid grid-cols-2 gap-2 w-full max-w-md">

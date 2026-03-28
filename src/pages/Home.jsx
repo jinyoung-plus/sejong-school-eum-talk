@@ -32,7 +32,7 @@ const quickChips = [
 const topicCards = [
   {
     title: '학교 현황',
-    desc: '173개교 기본정보·연락처 한눈에',
+    desc: '학교 기본정보·연락처 한눈에',
     icon: School,
     color: 'from-blue-500 to-blue-600',
     link: '/schools',
@@ -92,7 +92,7 @@ export default function Home() {
   const kpis = [
     { label: '전체 학교', value: stats.total, suffix: '교', icon: School, color: 'text-primary-500' },
     { label: '총 학생수', value: stats.totalStudents?.toLocaleString(), suffix: '명', icon: Users, color: 'text-blue-500' },
-    { label: '생활권', value: '24', suffix: '개 읍면동', icon: MapPin, color: 'text-amber-500' },
+    { label: '지역', value: '24', suffix: '개 읍면동', icon: MapPin, color: 'text-amber-500' },
     { label: '학급당 학생수', value: stats.totalClasses ? (stats.totalStudents / stats.totalClasses).toFixed(1) : '-', suffix: '명', icon: BookOpen, color: 'text-emerald-500' },
   ];
 
@@ -131,7 +131,7 @@ export default function Home() {
           </h2>
 
           <p className="text-navy-300 text-sm md:text-base max-w-lg mx-auto mb-8 animate-slide-up delay-100 opacity-0">
-            173개 학교의 모든 정보를 한곳에서 검색하고,
+            세종시 학교의 모든 정보를 한곳에서 검색하고,
             <br className="hidden sm:block" />
             AI가 분석해서 알려드립니다.
           </p>
@@ -297,7 +297,7 @@ export default function Home() {
                 </span>
               </div>
               <p className="text-sm text-navy-400 mb-4">
-                173개 학교의 위치를 카카오맵에서 한눈에 확인하세요.
+                학교의 위치를 지도에서 한눈에 확인하세요.
                 학교급별 필터, 마커 클릭으로 상세정보까지.
               </p>
 
