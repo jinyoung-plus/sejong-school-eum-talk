@@ -41,12 +41,19 @@ export default function Login() {
         if (err) throw err;
         if (loggedIn) navigate('/');
       } else {
-        if (!displayName.trim()) {
+         if (!displayName.trim()) {
           throw { message: '이름을 입력해주세요.' };
         }
         const { user: created, error: err } = await signUp(email, password, displayName);
         if (err) throw err;
-        setSuccess('가입 완료! 이메일을 확인하고 인증 링크를 클릭해주세요.');
+        
+        if (created) {
+          // 재가입(로그인됨) → 홈으로 이동
+          navigate('/');
+        } else {
+          // 신규 가입 → 이메일 확인 안내
+          setSuccess('가입 완료! 로그인 페이지에서 로그인해주세요.');
+        }
       }
     } catch (err) {
       setError(err.message || '오류가 발생했습니다.');
