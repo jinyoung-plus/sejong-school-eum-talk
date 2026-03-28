@@ -12,6 +12,7 @@ import Chat from './pages/Chat';
 import Login from './pages/Login';
 import Profile from './pages/Profile';
 
+import ResetPassword from './pages/ResetPassword';
 import SchoolStatus from './pages/SchoolStatus';
 
 export default function App() {
@@ -30,6 +31,7 @@ export default function App() {
             <Route path="/chat" element={<Chat />} />
             <Route path="/login" element={<Login />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
 
             <Route path="/schools" element={<SchoolStatus />} />
 

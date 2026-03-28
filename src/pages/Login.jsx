@@ -149,6 +149,18 @@ export default function Login() {
             </div>
           </div>
 
+          {mode === 'login' && (
+            <div className="text-right">
+              <button
+                type="button"
+                onClick={() => navigate('/reset-password')}
+                className="text-[11px] text-slate-400 hover:text-teal-600"
+              >
+                비밀번호를 잊으셨나요?
+              </button>
+            </div>
+          )}
+
           {/* 에러/성공 메시지 */}
           {error && (
             <div className="flex items-center gap-2 px-3 py-2 bg-red-50 border border-red-200 rounded-lg text-red-600 text-xs">
