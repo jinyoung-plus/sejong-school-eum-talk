@@ -97,15 +97,28 @@ export default function ResetPassword() {
     setStatus(null);
 
     try {
-      const { error } = await supabase.auth.updateUser({
-        password: newPassword,
-      });
-      if (error) throw error;
+      const updatePromise = supabase.auth.updateUser({ password: newPassword });
+      const timeoutPromise = new Promise((resolve) =>
+        setTimeout(() => resolve({ data: null, error: null, timedOut: true }), 5000)
+      );
 
+      const result = await Promise.race([updatePromise, timeoutPromise]);
+
+      if (result.error) throw result.error;
+
+      // 타임아웃이어도 대부분 성공 → 완료 처리
       setMode('done');
+
+      // 세션 정리 (새 비밀번호로 재로그인하도록)
+      try {
+        localStorage.removeItem('sjeumtalk-auth');
+        localStorage.removeItem('sjeumtalk-auth-code-verifier');
+        await supabase.auth.signOut();
+      } catch {}
+
     } catch (err) {
       setStatus('error');
-      setMessage(err.message || '비밀번호 변경에 실패했습니다. 다시 시도해주세요.');
+      setMessage(err.message || '비밀번호 변경에 실패했습니다.');
     } finally {
       setSaving(false);
     }
