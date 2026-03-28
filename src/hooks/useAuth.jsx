@@ -76,7 +76,7 @@ export function AuthProvider({ children }) {
       setDisplayName('');
     }
   }
-  
+
   // 이름 변경 (profiles 테이블만 사용, auth.updateUser 사용 안 함)
   async function updateDisplayName(newName) {
     if (!supabase || !user) return { error: 'Not connected' };
@@ -124,6 +124,29 @@ export function AuthProvider({ children }) {
         data: { display_name: displayNameInput, role: userRole },
       },
     });
+
+    // "User already registered" → 탈퇴 후 재가입 시도
+    if (error?.message?.includes('already registered')) {
+      // 로그인 시도 → 성공하면 profile 복원
+      const { data: loginData, error: loginError } = await supabase.auth.signInWithPassword({
+        email, password,
+      });
+
+      if (loginError) {
+        return { user: null, error: { message: '이미 등록된 이메일입니다. 기존 비밀번호로 로그인해주세요.' } };
+      }
+
+      // 로그인 성공 → profile 복원
+      if (loginData?.user) {
+        await supabase.from('profiles').upsert({
+          user_id: loginData.user.id,
+          email: email,
+          role: userRole,
+          display_name: displayNameInput,
+        });
+        return { user: loginData.user, error: null };
+      }
+    }
 
     if (data?.user && !error) {
       await supabase.from('profiles').upsert({
