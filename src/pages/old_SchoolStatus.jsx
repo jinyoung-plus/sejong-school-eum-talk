@@ -157,9 +157,8 @@ export default function SchoolStatus() {
       </div>
 
       <div className="max-w-[1600px] mx-auto px-4 py-6 space-y-5">
-        {/* ── 통계 카드 ── */}
-        {/* 모바일: 가로 스크롤 탭, sm 이상: 그리드 */}
-        <div className="hidden sm:grid sm:grid-cols-4 lg:grid-cols-8 gap-2">
+        {/* 통계 카드 */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2">
           {FILTER_TABS.map(tab => (
             <button key={tab.key} onClick={() => setTypeFilter(tab.key)}
               className={`rounded-xl p-3 text-center transition-all border overflow-hidden relative ${
@@ -174,29 +173,11 @@ export default function SchoolStatus() {
             </button>
           ))}
         </div>
-        {/* 모바일 전용: 가로 스크롤 컴팩트 탭 */}
-        <div className="sm:hidden -mx-4 px-4">
-          <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-none">
-            {FILTER_TABS.map(tab => (
-              <button key={tab.key} onClick={() => setTypeFilter(tab.key)}
-                className={`shrink-0 rounded-full px-3.5 py-2 text-xs font-semibold transition-all border whitespace-nowrap ${
-                  typeFilter === tab.key
-                    ? 'bg-blue-600 text-white border-blue-600 shadow-md'
-                    : 'bg-white text-gray-600 border-gray-200'
-                }`}
-                style={{ borderLeft: `3px solid ${TAB_COLORS[tab.key]}` }}>
-                {tab.label}
-                <span className="ml-1.5 font-extrabold">{tabStats.counts[tab.key] ?? 0}</span>
-              </button>
-            ))}
-          </div>
-        </div>
 
-        {/* ── 검색·필터 바 ── */}
-        <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-3 sm:p-4">
-          <div className="flex flex-col sm:flex-row sm:flex-wrap gap-2 sm:gap-3 sm:items-center">
-            {/* 검색 입력 */}
-            <div className="relative flex-1 min-w-0 sm:min-w-48">
+        {/* 검색·필터 바 */}
+        <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-4">
+          <div className="flex flex-wrap gap-3 items-center">
+            <div className="relative flex-1 min-w-48">
               <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
               <input type="text" value={search} onChange={e => setSearch(e.target.value)}
                 placeholder="학교명, 담당자명, 전화번호 검색..."
@@ -206,35 +187,31 @@ export default function SchoolStatus() {
                   className="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"><X size={14} /></button>
               )}
             </div>
-            {/* 지역·정렬·즐겨찾기 — 모바일에서 한 줄로 */}
-            <div className="flex gap-2 items-center overflow-x-auto">
-              <div className="flex gap-1 bg-gray-100 rounded-lg p-0.5 shrink-0">
-                {['전체', '동지역', '읍면지역'].map(r => (
-                  <button key={r} onClick={() => setRegionFilter(r)}
-                    className={`px-2.5 sm:px-3 py-1.5 text-xs font-medium rounded-md transition-all whitespace-nowrap ${
-                      regionFilter === r ? 'bg-white shadow text-gray-900' : 'text-gray-500 hover:text-gray-700'
-                    }`}>{r}</button>
-                ))}
-              </div>
-              <select value={sortKey} onChange={e => setSortKey(e.target.value)}
-                className="text-xs sm:text-sm font-semibold border-2 border-primary-300 rounded-lg px-2 sm:px-3 py-1.5 sm:py-2 bg-primary-50 text-primary-700 cursor-pointer focus:ring-2 focus:ring-primary-200 shrink-0">
-                <option value="default">기본순</option>
-                <option value="name">이름순</option>
-                <option value="stu_desc">학생수↓</option>
-                <option value="stu_asc">학생수↑</option>
-                <option value="cls_desc">학급수↓</option>
-                <option value="date_asc">개교일↑</option>
-                <option value="date_desc">개교일↓</option>
-              </select>
-              <button onClick={() => setShowFavOnly(p => !p)}
-                className={`flex items-center gap-1 px-2.5 sm:px-3 py-1.5 sm:py-2 text-xs font-medium rounded-lg border transition-all shrink-0 ${
-                  showFavOnly ? 'bg-amber-50 border-amber-300 text-amber-700' : 'bg-white border-gray-200 text-gray-500 hover:border-amber-300'
-                }`}>
-                <Star size={13} className={showFavOnly ? 'fill-amber-400 text-amber-400' : ''} />
-                <span className="hidden sm:inline">즐겨찾기</span>
-                {favorites.length > 0 && <span>({favorites.length})</span>}
-              </button>
+            <div className="flex gap-1 bg-gray-100 rounded-lg p-0.5">
+              {['전체', '동지역', '읍면지역'].map(r => (
+                <button key={r} onClick={() => setRegionFilter(r)}
+                  className={`px-3 py-1.5 text-xs font-medium rounded-md transition-all ${
+                    regionFilter === r ? 'bg-white shadow text-gray-900' : 'text-gray-500 hover:text-gray-700'
+                  }`}>{r}</button>
+              ))}
             </div>
+            <select value={sortKey} onChange={e => setSortKey(e.target.value)}
+              className="text-sm font-semibold border-2 border-primary-300 rounded-lg px-3 py-2 bg-primary-50 text-primary-700 cursor-pointer focus:ring-2 focus:ring-primary-200">
+              <option value="default">정렬: 기본순</option>
+              <option value="name">이름순</option>
+              <option value="stu_desc">학생수 많은순</option>
+              <option value="stu_asc">학생수 적은순</option>
+              <option value="cls_desc">학급수 많은순</option>
+              <option value="date_asc">개교일 오래된순</option>
+              <option value="date_desc">개교일 최신순</option>
+            </select>
+            <button onClick={() => setShowFavOnly(p => !p)}
+              className={`flex items-center gap-1.5 px-3 py-2 text-xs font-medium rounded-lg border transition-all ${
+                showFavOnly ? 'bg-amber-50 border-amber-300 text-amber-700' : 'bg-white border-gray-200 text-gray-500 hover:border-amber-300'
+              }`}>
+              <Star size={13} className={showFavOnly ? 'fill-amber-400 text-amber-400' : ''} />
+              즐겨찾기 {favorites.length > 0 && `(${favorites.length})`}
+            </button>
           </div>
         </div>
 
@@ -242,8 +219,8 @@ export default function SchoolStatus() {
           검색 결과 <span className="font-bold text-gray-900">{filtered.length}</span>교
         </div>
 
-        {/* ── 데스크톱 테이블 (md 이상) ── */}
-        <div className="hidden md:block bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+        {/* 테이블 */}
+        <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
@@ -350,112 +327,8 @@ export default function SchoolStatus() {
           </div>
         </div>
 
-        {/* ── 모바일 카드 리스트 (md 미만) ── */}
-        <div className="md:hidden space-y-2.5">
-          {filtered.map(s => {
-            const isFav = favorites.includes(s.name);
-            const classes = formatClasses(s.classes_count, s.special_classes);
-            return (
-              <div key={s.id} onClick={() => setSelectedSchool(s)}
-                className={`bg-white rounded-xl border shadow-sm p-3.5 active:bg-blue-50/50 cursor-pointer transition-colors ${
-                  isFav ? 'border-amber-200 bg-amber-50/30' : 'border-gray-200'
-                }`}>
-                {/* 카드 상단: 구분 + 학교명 + 즐겨찾기 */}
-                <div className="flex items-start justify-between gap-2 mb-2.5">
-                  <div className="flex items-center gap-2 flex-wrap min-w-0">
-                    <span className={`inline-block text-[10px] font-semibold px-2 py-0.5 rounded border shrink-0 ${
-                      TYPE_COLOR[s.rawType] || 'bg-gray-100 text-gray-600 border-gray-200'
-                    }`}>{s.rawType}</span>
-                    <span className={`shrink-0 text-[10px] font-bold px-1.5 py-0.5 rounded ${
-                      s.region === '동지역' ? 'bg-blue-100 text-blue-600' : 'bg-amber-100 text-amber-600'
-                    }`}>{s.region === '동지역' ? '동' : '읍면'}</span>
-                  </div>
-                  <button onClick={e => toggleFav(s.name, e)} className="shrink-0 p-0.5">
-                    <Star size={16} className={isFav ? 'fill-amber-400 text-amber-400' : 'text-gray-200'} />
-                  </button>
-                </div>
-                <div className="font-bold text-gray-900 text-[15px] mb-2">{highlight(s.name, search)}</div>
-
-                {/* 카드 중단: 주요 수치 */}
-                <div className="grid grid-cols-3 gap-2 mb-2.5">
-                  <div className="bg-gray-50 rounded-lg px-2.5 py-1.5 text-center">
-                    <div className="text-[10px] text-gray-400 mb-0.5">학급</div>
-                    <div className="text-sm font-bold text-gray-700 font-mono">{classes}</div>
-                  </div>
-                  <div className="bg-gray-50 rounded-lg px-2.5 py-1.5 text-center">
-                    <div className="text-[10px] text-gray-400 mb-0.5">학생</div>
-                    <div className="text-sm font-bold text-gray-800">
-                      {s.student_count ? Number(s.student_count).toLocaleString() : '-'}
-                    </div>
-                  </div>
-                  <div className="bg-gray-50 rounded-lg px-2.5 py-1.5 text-center">
-                    <div className="text-[10px] text-gray-400 mb-0.5">개교</div>
-                    <div className="text-xs font-medium text-gray-500">{s.established_date || '-'}</div>
-                  </div>
-                </div>
-
-                {/* 카드 하단: 전화 + 홈페이지 */}
-                <div className="flex items-center justify-between gap-2 text-xs">
-                  <div onClick={e => e.stopPropagation()}>
-                    {s.main_phone ? (
-                      <button onClick={e => copyPhone(s.main_phone, e)}
-                        className="flex items-center gap-1.5 text-blue-600 font-mono">
-                        {highlight(s.main_phone, search)}
-                        {copied === s.main_phone
-                          ? <Check size={11} className="text-green-500" />
-                          : <Copy size={11} className="text-blue-300" />}
-                      </button>
-                    ) : <span className="text-gray-300">-</span>}
-                  </div>
-                  <div onClick={e => e.stopPropagation()}>
-                    {s.homepage ? (
-                      <a href={s.homepage} target="_blank" rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1 text-primary-600 font-medium">
-                        홈페이지 <ExternalLink size={11} />
-                      </a>
-                    ) : null}
-                  </div>
-                </div>
-
-                {/* staff 전용: 담당자 정보 */}
-                {isStaff && (s.principal_name || s.vice_principal_name || s.admin_name) && (
-                  <div className="mt-2.5 pt-2.5 border-t border-gray-100 grid grid-cols-3 gap-2 text-xs">
-                    {[
-                      { role: '교장', name: s.principal_name, phone: s.principal_phone },
-                      { role: '교감', name: s.vice_principal_name, phone: s.vice_principal_phone },
-                      { role: '행정실장', name: s.admin_name, phone: s.admin_phone },
-                    ].map(c => (
-                      <div key={c.role} className="min-w-0">
-                        <div className="text-[10px] text-gray-400">{c.role}</div>
-                        {c.name ? (
-                          <>
-                            <div className="font-semibold text-gray-800 truncate">{highlight(c.name, search)}</div>
-                            {c.phone && (
-                              <button onClick={e => { e.stopPropagation(); copyPhone(c.phone, e); }}
-                                className="text-blue-500 font-mono truncate block mt-0.5">
-                                {highlight(c.phone, search)}
-                              </button>
-                            )}
-                          </>
-                        ) : <span className="text-gray-300">-</span>}
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-            );
-          })}
-          {filtered.length === 0 && (
-            <div className="text-center py-16 text-gray-400">
-              <div className="text-4xl mb-3">🏫</div>
-              <div className="font-medium text-gray-500 mb-1">검색 결과가 없습니다</div>
-              <div className="text-xs">검색어나 필터를 변경해 보세요</div>
-            </div>
-          )}
-        </div>
-
         {!isStaff && (
-          <div className="flex items-center gap-2 p-3 sm:p-4 bg-amber-50 border border-amber-200 rounded-xl text-xs sm:text-sm text-amber-800">
+          <div className="flex items-center gap-2 p-4 bg-amber-50 border border-amber-200 rounded-xl text-sm text-amber-800">
             <Lock size={14} className="shrink-0" />
             원장·교장, 원감·교감, 행정실장 연락처는 교육청 직원 로그인 후 열람 가능합니다.
           </div>
@@ -491,13 +364,9 @@ function SchoolModal({ school, isStaff, onClose, onCopy, copied }) {
   const classes = formatClasses(s.classes_count, s.special_classes);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center sm:p-4 bg-black/50 backdrop-blur-sm" onClick={onClose}>
-      <div className="bg-white rounded-t-2xl sm:rounded-2xl shadow-2xl w-full sm:max-w-md max-h-[90vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
-        <div className="bg-gradient-to-br from-[#0d2137] to-[#152f4a] text-white px-5 sm:px-6 py-5 rounded-t-2xl">
-          {/* 모바일 드래그 핸들 */}
-          <div className="sm:hidden flex justify-center mb-3">
-            <div className="w-10 h-1 bg-white/30 rounded-full" />
-          </div>
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm" onClick={onClose}>
+      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md max-h-[90vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
+        <div className="bg-gradient-to-br from-[#0d2137] to-[#152f4a] text-white px-6 py-5 rounded-t-2xl">
           <div className="flex items-start justify-between">
             <div>
               <div className="flex items-center gap-2 mb-1">
@@ -506,7 +375,7 @@ function SchoolModal({ school, isStaff, onClose, onCopy, copied }) {
                   s.region === '동지역' ? 'bg-blue-400/30' : 'bg-amber-400/30'
                 }`}>{s.region}</span>
               </div>
-              <h2 className="text-lg sm:text-xl font-extrabold">{s.name}</h2>
+              <h2 className="text-xl font-extrabold">{s.name}</h2>
               {s.established_date && <p className="text-white/60 text-xs mt-1">개교: {s.established_date}</p>}
             </div>
             <button onClick={onClose} className="text-white/60 hover:text-white p-1"><X size={20} /></button>
@@ -525,7 +394,7 @@ function SchoolModal({ school, isStaff, onClose, onCopy, copied }) {
             </div>
           </div>
         </div>
-        <div className="px-5 sm:px-6 py-5 space-y-4">
+        <div className="px-6 py-5 space-y-4">
           {s.main_phone && (
             <div className="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
               <div>
@@ -548,11 +417,11 @@ function SchoolModal({ school, isStaff, onClose, onCopy, copied }) {
           {s.homepage && (
             <a href={s.homepage} target="_blank" rel="noopener noreferrer"
               className="flex items-center justify-between p-3 bg-primary-50 border border-primary-100 rounded-xl hover:bg-primary-100 transition-colors">
-              <div className="min-w-0">
+              <div>
                 <div className="text-xs text-primary-500 mb-0.5">홈페이지</div>
-                <div className="text-sm text-primary-700 font-medium truncate">{s.homepage}</div>
+                <div className="text-sm text-primary-700 font-medium truncate max-w-[240px]">{s.homepage}</div>
               </div>
-              <ExternalLink size={16} className="text-primary-500 shrink-0 ml-2" />
+              <ExternalLink size={16} className="text-primary-500 shrink-0" />
             </a>
           )}
           {isStaff ? (
