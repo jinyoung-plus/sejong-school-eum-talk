@@ -42,7 +42,7 @@ export function AuthProvider({ children }) {
   // profiles 테이블에서 role + display_name 가져오기
   async function fetchProfile(userId, email) {
     try {
-      const { data, error } = await supabase
+      const { data } = await supabase
         .from('profiles')
         .select('role, display_name')
         .eq('user_id', userId)
@@ -54,7 +54,22 @@ export function AuthProvider({ children }) {
         return;
       }
 
-      // profile이 없음 = 탈퇴한 계정 → 즉시 세션 정리
+      // profile 없음 → 재가입 중일 수 있으므로 1.5초 후 재시도
+      await new Promise(r => setTimeout(r, 1500));
+
+      const { data: retryData } = await supabase
+        .from('profiles')
+        .select('role, display_name')
+        .eq('user_id', userId)
+        .single();
+
+      if (retryData) {
+        if (retryData.role) setRole(retryData.role);
+        if (retryData.display_name) setDisplayName(retryData.display_name);
+        return;
+      }
+
+      // 재시도에도 없으면 → 진짜 탈퇴 계정
       setUser(null);
       setRole('public');
       setDisplayName('');
@@ -63,12 +78,9 @@ export function AuthProvider({ children }) {
         localStorage.removeItem('sjeumtalk-auth-code-verifier');
       } catch {}
       try { await supabase.auth.signOut(); } catch {}
-      
-      // 약간의 지연 후 알림 (state 반영 후)
       setTimeout(() => {
         alert('탈퇴 처리된 계정입니다. 다시 가입해주세요.');
       }, 100);
-      return;
 
     } catch (err) {
       if (email?.endsWith('@korea.kr')) setRole('staff');
