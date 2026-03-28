@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useState, useEffect, useRef } from 'react';
 import { supabase, isSupabaseConfigured } from '../lib/supabase';
 
 const AuthContext = createContext(null);
@@ -8,6 +8,7 @@ export function AuthProvider({ children }) {
   const [role, setRole] = useState('public');
   const [displayName, setDisplayName] = useState('');
   const [loading, setLoading] = useState(true);
+  const isSigningUp = useRef(false);  // ← 추가
 
   useEffect(() => {
     if (!isSupabaseConfigured()) {
@@ -54,9 +55,11 @@ export function AuthProvider({ children }) {
         return;
       }
 
-      // profile 없음 → 재가입 중일 수 있으므로 1.5초 후 재시도
-      await new Promise(r => setTimeout(r, 1500));
+      // 가입 중이면 탈퇴 체크 건너뛰기
+      if (isSigningUp.current) return;
 
+      // 재시도
+      await new Promise(r => setTimeout(r, 1500));
       const { data: retryData } = await supabase
         .from('profiles')
         .select('role, display_name')
@@ -69,7 +72,9 @@ export function AuthProvider({ children }) {
         return;
       }
 
-      // 재시도에도 없으면 → 진짜 탈퇴 계정
+      if (isSigningUp.current) return;  // 재시도 후에도 체크
+
+      // 진짜 탈퇴 계정
       setUser(null);
       setRole('public');
       setDisplayName('');
@@ -126,6 +131,8 @@ export function AuthProvider({ children }) {
       return { user: null, error: { message: 'Supabase 미설정' } };
     }
 
+    isSigningUp.current = true;  // ← 추가
+
     const domain = email.split('@')[1];
     const userRole = domain === 'korea.kr' ? 'staff' : 'public';
 
@@ -169,7 +176,8 @@ export function AuthProvider({ children }) {
       });
     }
 
-    return { user: data?.user, error };
+    isSigningUp.current = false;  // ← 마지막에 추가
+    return { user: data?.user || loginData?.user, error: null };
   }
 
   async function signOut() {
