@@ -8,7 +8,7 @@ export function AuthProvider({ children }) {
   const [role, setRole] = useState('public');
   const [displayName, setDisplayName] = useState('');
   const [loading, setLoading] = useState(true);
-  const isSigningUp = useRef(false);  // ← 추가
+  const isSigningUp = useRef(false);
 
   useEffect(() => {
     if (!isSupabaseConfigured()) {
@@ -16,16 +16,20 @@ export function AuthProvider({ children }) {
       return;
     }
 
-    supabase.auth.getSession().then(({ data: { session } }) => {
+    // ★ 수정: async로 변경하여 fetchProfile 완료까지 loading 유지
+    supabase.auth.getSession().then(async ({ data: { session } }) => {
       if (session?.user) {
         setUser(session.user);
-        fetchProfile(session.user.id, session.user.email);
+        await fetchProfile(session.user.id, session.user.email);
       }
       setLoading(false);
     });
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (_event, session) => {
+      async (event, session) => {
+        // ★ 수정: INITIAL_SESSION은 위의 getSession에서 이미 처리했으므로 건너뛰기
+        if (event === 'INITIAL_SESSION') return;
+
         if (session?.user) {
           setUser(session.user);
           await fetchProfile(session.user.id, session.user.email);
@@ -50,7 +54,12 @@ export function AuthProvider({ children }) {
         .single();
 
       if (data) {
-        if (data.role) setRole(data.role);
+        // ★ 수정: role이 null이어도 이메일 도메인 기반 폴백 적용
+        if (data.role) {
+          setRole(data.role);
+        } else if (email?.endsWith('@korea.kr')) {
+          setRole('staff');
+        }
         if (data.display_name) setDisplayName(data.display_name);
         return;
       }
@@ -67,7 +76,11 @@ export function AuthProvider({ children }) {
         .single();
 
       if (retryData) {
-        if (retryData.role) setRole(retryData.role);
+        if (retryData.role) {
+          setRole(retryData.role);
+        } else if (email?.endsWith('@korea.kr')) {
+          setRole('staff');
+        }
         if (retryData.display_name) setDisplayName(retryData.display_name);
         return;
       }
@@ -131,7 +144,7 @@ export function AuthProvider({ children }) {
       return { user: null, error: { message: 'Supabase 미설정' } };
     }
 
-    isSigningUp.current = true;  // ← 추가
+    isSigningUp.current = true;
 
     const domain = email.split('@')[1];
     const userRole = domain === 'korea.kr' ? 'staff' : 'public';
@@ -146,16 +159,15 @@ export function AuthProvider({ children }) {
 
     // "User already registered" → 탈퇴 후 재가입 시도
     if (error?.message?.includes('already registered')) {
-      // 로그인 시도 → 성공하면 profile 복원
       const { data: loginData, error: loginError } = await supabase.auth.signInWithPassword({
         email, password,
       });
 
       if (loginError) {
+        isSigningUp.current = false;
         return { user: null, error: { message: '이미 등록된 이메일입니다. 기존 비밀번호로 로그인해주세요.' } };
       }
 
-      // 로그인 성공 → profile 복원
       if (loginData?.user) {
         await supabase.from('profiles').upsert({
           user_id: loginData.user.id,
@@ -163,6 +175,7 @@ export function AuthProvider({ children }) {
           role: userRole,
           display_name: displayNameInput,
         });
+        isSigningUp.current = false;
         return { user: loginData.user, error: null };
       }
     }
@@ -176,8 +189,8 @@ export function AuthProvider({ children }) {
       });
     }
 
-    isSigningUp.current = false;  // ← 마지막에 추가
-    return { user: data?.user || loginData?.user, error: null };
+    isSigningUp.current = false;
+    return { user: data?.user, error: null };
   }
 
   async function signOut() {
@@ -185,7 +198,6 @@ export function AuthProvider({ children }) {
     setRole('public');
     setDisplayName('');
 
-    // localStorage에서 세션 직접 삭제 (signOut 실패 대비)
     try {
       localStorage.removeItem('sjeumtalk-auth');
       localStorage.removeItem('sjeumtalk-auth-code-verifier');
