@@ -9,7 +9,7 @@ export function AuthProvider({ children }) {
   const [displayName, setDisplayName] = useState('');
   const [loading, setLoading] = useState(true);
   const isSigningUp = useRef(false);
-  const profileFetched = useRef(false);   // 중복 호출 방지
+  const profileFetched = useRef(false);
 
   useEffect(() => {
     if (!isSupabaseConfigured()) {
@@ -17,19 +17,15 @@ export function AuthProvider({ children }) {
       return;
     }
 
-    // onAuthStateChange가 모든 이벤트를 처리 (getSession 별도 호출 불필요)
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, session) => {
-        console.log('[Auth] onAuthStateChange:', event);
-
         if (session?.user) {
-          setUser(session.user);
-
-          // INITIAL_SESSION 또는 SIGNED_IN에서 한 번만 프로필 가져오기
           if (!profileFetched.current) {
             profileFetched.current = true;
+            // ★ 프로필 먼저 가져온 뒤 user를 set → 이메일 깜빡임 방지
             await fetchProfile(session.user.id, session.user.email, session.user.user_metadata);
           }
+          setUser(session.user);
         } else {
           setUser(null);
           setRole('public');
@@ -41,10 +37,10 @@ export function AuthProvider({ children }) {
       }
     );
 
-    // 안전장치: 3초 안에 onAuthStateChange가 안 오면 loading 해제
+    // 안전장치: 4초 안에 onAuthStateChange가 안 오면 loading 해제
     const safetyTimer = setTimeout(() => {
       setLoading(false);
-    }, 3000);
+    }, 4000);
 
     return () => {
       subscription.unsubscribe();
@@ -54,67 +50,48 @@ export function AuthProvider({ children }) {
 
   // profiles 테이블에서 role + display_name 가져오기
   async function fetchProfile(userId, email, metadata) {
-    console.log('[Auth] fetchProfile 시작:', { userId, email });
-
-    // 1단계: 타임아웃 포함 profiles 조회 (5초 제한)
+    // 1단계: 타임아웃 포함 profiles 조회 (3초 제한)
     try {
-      const result = await Promise.race([
+      const { data, error } = await Promise.race([
         supabase
           .from('profiles')
           .select('role, display_name, email')
           .eq('user_id', userId)
           .single(),
         new Promise((_, reject) =>
-          setTimeout(() => reject(new Error('타임아웃(5초)')), 5000)
+          setTimeout(() => reject(new Error('타임아웃')), 3000)
         ),
       ]);
 
-      const { data, error } = result;
-      console.log('[Auth] profiles 조회 결과:', { data, error: error?.message || null });
-
       if (data) {
-        if (data.role) {
-          setRole(data.role);
-          console.log('[Auth] ✅ role (DB):', data.role);
-        } else {
-          applyRoleFallback(email, metadata);
-        }
+        if (data.role) setRole(data.role);
+        else applyRoleFallback(email, metadata);
 
-        if (data.display_name) {
-          setDisplayName(data.display_name);
-          console.log('[Auth] ✅ displayName (DB):', data.display_name);
-        } else {
-          applyNameFallback(metadata);
-        }
+        if (data.display_name) setDisplayName(data.display_name);
+        else applyNameFallback(metadata);
         return;
       }
 
-      // data가 null — 프로필 행 없음
       if (error) {
-        console.warn('[Auth] ⚠️ profiles 조회 에러:', error.message);
+        console.warn('[Auth] profiles 조회 에러:', error.message);
       }
-
     } catch (err) {
-      // 타임아웃 또는 네트워크 에러
-      console.warn('[Auth] ⚠️ profiles 조회 실패:', err.message);
+      console.warn('[Auth] profiles 조회 실패:', err.message, '→ 폴백 적용');
     }
 
     // 2단계: profiles 조회 실패 시 metadata/이메일 폴백
-    console.log('[Auth] 폴백 적용 시작');
     applyRoleFallback(email, metadata);
     applyNameFallback(metadata);
 
-    // 3단계: 프로필이 없는 경우 재시도 (백그라운드, 탈퇴 체크용)
+    // 3단계: 백그라운드 재시도 (성공하면 DB 값으로 업데이트)
     if (!isSigningUp.current) {
       retryProfileInBackground(userId, email, metadata);
     }
   }
 
-  // 백그라운드에서 프로필 재시도 (UI는 이미 폴백으로 표시 중)
-  async function retryProfileInBackground(userId, email, metadata) {
+  // 백그라운드 재시도 (UI는 이미 폴백으로 표시 중)
+  async function retryProfileInBackground(userId) {
     await new Promise(r => setTimeout(r, 3000));
-    console.log('[Auth] 백그라운드 재시도...');
-
     try {
       const { data } = await Promise.race([
         supabase
@@ -128,41 +105,21 @@ export function AuthProvider({ children }) {
       ]);
 
       if (data) {
-        console.log('[Auth] ✅ 재시도 성공:', data);
         if (data.role) setRole(data.role);
         if (data.display_name) setDisplayName(data.display_name);
-      } else if (!isSigningUp.current) {
-        console.warn('[Auth] 재시도 후에도 프로필 없음 — 탈퇴 계정 가능성');
-        // 탈퇴 처리는 하지 않음 (폴백으로 이미 동작 중이므로)
       }
-    } catch (err) {
-      console.warn('[Auth] 재시도 실패:', err.message);
-    }
+    } catch {}
   }
 
-  // role 폴백: metadata > 이메일 도메인
   function applyRoleFallback(email, metadata) {
-    if (metadata?.role) {
-      setRole(metadata.role);
-      console.log('[Auth] ✅ role (metadata 폴백):', metadata.role);
-    } else if (email?.endsWith('@korea.kr')) {
-      setRole('staff');
-      console.log('[Auth] ✅ role (도메인 폴백): staff');
-    } else {
-      setRole('public');
-      console.log('[Auth] role: 기본값 public');
-    }
+    if (metadata?.role) setRole(metadata.role);
+    else if (email?.endsWith('@korea.kr')) setRole('staff');
+    else setRole('public');
   }
 
-  // displayName 폴백: metadata > (이메일 앞부분은 resolvedName에서 처리)
   function applyNameFallback(metadata) {
-    if (metadata?.display_name) {
-      setDisplayName(metadata.display_name);
-      console.log('[Auth] ✅ displayName (metadata 폴백):', metadata.display_name);
-    } else {
-      setDisplayName('');
-      console.log('[Auth] displayName: 없음 → 이메일 앞부분 폴백');
-    }
+    if (metadata?.display_name) setDisplayName(metadata.display_name);
+    else setDisplayName('');
   }
 
   // 이름 변경 (profiles 테이블만 사용)
@@ -190,7 +147,7 @@ export function AuthProvider({ children }) {
       return { user: { email }, error: null };
     }
 
-    profileFetched.current = false;  // 로그인 시 프로필 다시 가져오기
+    profileFetched.current = false;
     const { data, error } = await supabase.auth.signInWithPassword({
       email,
       password,
