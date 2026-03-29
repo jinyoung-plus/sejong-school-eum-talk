@@ -11,12 +11,12 @@ import { sendMessageStream } from '../lib/claude';
 // 퀵칩 추천 질문 목록
 // ─────────────────────────────────────────────
 const QUICK_CHIPS = [
-  { label: '전체 학교 현황', query: '세종시 전체 학교 현황을 요약해 주세요.' },
-  { label: '학생수 TOP 5', query: '학생수가 가장 많은 초등학교 5곳은 어디인가요?' },
-  { label: '소규모 학교', query: '학생수 100명 미만인 소규모 학교는 몇 개이고 어디에 있나요?' },
-  { label: '동 vs 읍면 비교', query: '동지역과 읍면지역 학교를 비교해 주세요.' },
-  { label: '고운동 학교', query: '고운동에 있는 학교들을 알려주세요.' },
-  { label: '특수·각종학교', query: '세종시 특수학교와 각종학교를 소개해 주세요.' },
+  { label: '🏫 우리 동네 학교 찾기', query: '해밀동에 있는 유치원, 초등학교, 중학교, 고등학교를 모두 알려주세요.' },
+  { label: '📊 학교 규모 비교', query: '새롬초와 다정초의 학생수, 학급수를 비교해 주세요.' },
+  { label: '🆕 2025 신설학교', query: '2025년에 새로 개교한 학교를 알려주세요.' },
+  { label: '📋 소규모 학교 현황', query: '학생수 100명 미만인 소규모 학교는 어디에 있나요?' },
+  { label: '🔄 전학·입학 절차', query: '세종시로 전학하려면 어떻게 해야 하나요?' },
+  { label: '🗺️ 동 vs 읍면 비교', query: '동지역과 읍면지역의 학교 수와 학생수를 비교해 주세요.' },
 ];
 
 // ─────────────────────────────────────────────
@@ -365,7 +365,8 @@ export default function Chat() {
             </div>
             <h2 className="text-xl font-bold text-gray-900 mb-1">무엇이든 물어보세요!</h2>
             <p className="text-gray-500 text-sm mb-8 max-w-xs">
-              세종시 학교에 대한 정보를<br />AI가 빠르게 찾아드립니다.
+              173개 학교 정보를 한곳에서 검색·비교·분석합니다.<br />
+              학교 밖 궁금증도 안내해 드려요.
             </p>
 
             <div className="grid grid-cols-2 gap-2 w-full max-w-md">
@@ -467,7 +468,7 @@ export default function Chat() {
           </button>
         </div>
         <p className="text-center text-xs text-gray-400 mt-2">
-          Enter로 전송 · Shift+Enter로 줄바꿈 · AI 응답은 참고용입니다
+          Enter로 전송 · Shift+Enter로 줄바꿈 · 교육 관련 추가 문의: 세종교육콜센터 ☎ 044-1396
         </p>
       </div>
     </div>
