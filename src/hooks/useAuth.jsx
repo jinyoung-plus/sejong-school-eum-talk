@@ -16,23 +16,25 @@ export function AuthProvider({ children }) {
       return;
     }
 
-    // ★ 수정: async로 변경하여 fetchProfile 완료까지 loading 유지
     supabase.auth.getSession().then(async ({ data: { session } }) => {
+      console.log('[Auth] getSession →', session ? `유저=${session.user.email}, id=${session.user.id}` : '세션 없음');
+      console.log('[Auth] user_metadata:', session?.user?.user_metadata);
+
       if (session?.user) {
         setUser(session.user);
-        await fetchProfile(session.user.id, session.user.email);
+        await fetchProfile(session.user.id, session.user.email, session.user.user_metadata);
       }
       setLoading(false);
     });
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, session) => {
-        // ★ 수정: INITIAL_SESSION은 위의 getSession에서 이미 처리했으므로 건너뛰기
+        console.log('[Auth] onAuthStateChange:', event);
         if (event === 'INITIAL_SESSION') return;
 
         if (session?.user) {
           setUser(session.user);
-          await fetchProfile(session.user.id, session.user.email);
+          await fetchProfile(session.user.id, session.user.email, session.user.user_metadata);
         } else {
           setUser(null);
           setRole('public');
@@ -44,50 +46,75 @@ export function AuthProvider({ children }) {
     return () => subscription.unsubscribe();
   }, []);
 
-  // profiles 테이블에서 role + display_name 가져오기
-  async function fetchProfile(userId, email) {
+  async function fetchProfile(userId, email, metadata) {
+    console.log('[Auth] fetchProfile 시작:', { userId, email });
+
     try {
-      const { data } = await supabase
+      const { data, error } = await supabase
         .from('profiles')
-        .select('role, display_name')
+        .select('role, display_name, email')
         .eq('user_id', userId)
         .single();
+
+      console.log('[Auth] profiles 조회:', { data, error: error?.message || null });
 
       if (data) {
-        // ★ 수정: role이 null이어도 이메일 도메인 기반 폴백 적용
         if (data.role) {
           setRole(data.role);
+          console.log('[Auth] ✅ role (DB):', data.role);
         } else if (email?.endsWith('@korea.kr')) {
           setRole('staff');
+          console.log('[Auth] ✅ role (도메인 폴백): staff');
+        } else {
+          console.log('[Auth] ⚠️ role 없음, public 유지');
         }
-        if (data.display_name) setDisplayName(data.display_name);
+
+        if (data.display_name) {
+          setDisplayName(data.display_name);
+          console.log('[Auth] ✅ displayName (DB):', data.display_name);
+        } else if (metadata?.display_name) {
+          setDisplayName(metadata.display_name);
+          console.log('[Auth] ✅ displayName (metadata 폴백):', metadata.display_name);
+        } else {
+          console.log('[Auth] ⚠️ displayName 없음 → 이메일 앞부분 폴백');
+        }
         return;
       }
 
-      // 가입 중이면 탈퇴 체크 건너뛰기
-      if (isSigningUp.current) return;
+      // data가 null — 프로필 행 없음
+      console.warn('[Auth] ⚠️ 프로필 행 없음!', error?.message);
+
+      if (isSigningUp.current) {
+        applyFallback(email, metadata);
+        return;
+      }
 
       // 재시도
+      console.log('[Auth] 1.5초 후 재시도...');
       await new Promise(r => setTimeout(r, 1500));
-      const { data: retryData } = await supabase
+      const { data: retryData, error: retryError } = await supabase
         .from('profiles')
-        .select('role, display_name')
+        .select('role, display_name, email')
         .eq('user_id', userId)
         .single();
 
+      console.log('[Auth] 재시도 결과:', { retryData, retryError: retryError?.message || null });
+
       if (retryData) {
-        if (retryData.role) {
-          setRole(retryData.role);
-        } else if (email?.endsWith('@korea.kr')) {
-          setRole('staff');
-        }
+        if (retryData.role) setRole(retryData.role);
+        else if (email?.endsWith('@korea.kr')) setRole('staff');
         if (retryData.display_name) setDisplayName(retryData.display_name);
+        else if (metadata?.display_name) setDisplayName(metadata.display_name);
         return;
       }
 
-      if (isSigningUp.current) return;  // 재시도 후에도 체크
+      if (isSigningUp.current) {
+        applyFallback(email, metadata);
+        return;
+      }
 
-      // 진짜 탈퇴 계정
+      // 프로필 없음 → 탈퇴 계정 처리
+      console.warn('[Auth] ❌ 프로필 없음 (재시도 실패) → 탈퇴 처리');
       setUser(null);
       setRole('public');
       setDisplayName('');
@@ -101,13 +128,21 @@ export function AuthProvider({ children }) {
       }, 100);
 
     } catch (err) {
-      if (email?.endsWith('@korea.kr')) setRole('staff');
-      else setRole('public');
-      setDisplayName('');
+      console.error('[Auth] ❌ fetchProfile 예외:', err.message);
+      applyFallback(email, metadata);
     }
   }
 
-  // 이름 변경 (profiles 테이블만 사용, auth.updateUser 사용 안 함)
+  function applyFallback(email, metadata) {
+    console.log('[Auth] 폴백 적용:', { email, metadata });
+    if (metadata?.role) setRole(metadata.role);
+    else if (email?.endsWith('@korea.kr')) setRole('staff');
+    else setRole('public');
+
+    if (metadata?.display_name) setDisplayName(metadata.display_name);
+    else setDisplayName('');
+  }
+
   async function updateDisplayName(newName) {
     if (!supabase || !user) return { error: 'Not connected' };
     try {
@@ -157,7 +192,6 @@ export function AuthProvider({ children }) {
       },
     });
 
-    // "User already registered" → 탈퇴 후 재가입 시도
     if (error?.message?.includes('already registered')) {
       const { data: loginData, error: loginError } = await supabase.auth.signInWithPassword({
         email, password,
@@ -208,7 +242,6 @@ export function AuthProvider({ children }) {
     }
   }
 
-  // displayName 우선순위: Context state > auth metadata > email 앞부분
   const resolvedName = displayName
     || user?.email?.split('@')[0]
     || '';
